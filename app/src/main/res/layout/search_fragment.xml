@@ -59,6 +59,7 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin">
 
             <TextView
+                android:freezesText="true"
                 android:justificationMode="inter_word"
                 android:id="@+id/textView"
                 android:layout_width="match_parent"

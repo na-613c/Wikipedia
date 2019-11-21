@@ -6,6 +6,7 @@ package com.example.wikipedia.ui;
  ***************************************/
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -56,6 +58,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View v = inflater.inflate(R.layout.search_fragment, container, false);
         button = (Button) v.findViewById(R.id.button);
         editText = (EditText) v.findViewById(R.id.edit_text);
@@ -88,7 +91,7 @@ public class SearchFragment extends Fragment {
         return v;
     }
 
-    private void startQuery(){
+    private void startQuery() {
         Launcher.init();
 
         searchWord = Launcher.searchWord;
@@ -125,6 +128,8 @@ public class SearchFragment extends Fragment {
 
 
         call.enqueue(new Callback<String>() {
+
+
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.i("Responsestring", response.body());
@@ -137,9 +142,11 @@ public class SearchFragment extends Fragment {
                         writeTv(jsonresponse);
 
                     } else {
+                        Toast.makeText(getContext(), "Nothing returned", Toast.LENGTH_LONG).show();
                         Log.i("onEmptyResponse", "Returned empty response");
                     }
-                } else Log.i("________ERR", "DISCONECT");
+                }
+
             }
 
             @Override
@@ -157,8 +164,6 @@ public class SearchFragment extends Fragment {
 
 
         try {
-
-
             /************** получаем весь объект JSON из ответа *********/
             JSONObject obj = new JSONObject(response);
             String strQuery = obj.optString("query");
@@ -228,7 +233,6 @@ public class SearchFragment extends Fragment {
         textView.setText(requestInformation.getExtract());
 
     }
-
 
 
 }
