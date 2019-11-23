@@ -6,7 +6,6 @@ package com.example.wikipedia.ui;
  ***************************************/
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,13 +20,12 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.wikipedia.ApiInterface.ApiInterface;
 import com.example.wikipedia.Data.Launcher;
 import com.example.wikipedia.Data.RequestInformation;
 import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
-import com.example.wikipedia.ApiInterface.ApiInterface;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,9 +44,12 @@ public class SearchFragment extends Fragment {
 
     private SearchWord searchWord;
     private RequestInformation requestInformation;
+    private FireBase fireBase;
+
     private Boolean firstPerformance = true;
 
     private Call<String> call;
+
     private String url;
     private String title;
     private String extract;
@@ -70,9 +71,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-
                     startQuery();
-
                     return true;
                 }
                 return false;
@@ -82,9 +81,7 @@ public class SearchFragment extends Fragment {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 startQuery();
-
             }
         });
 
@@ -97,19 +94,15 @@ public class SearchFragment extends Fragment {
         searchWord = Launcher.searchWord;
         requestInformation = Launcher.requestInformation;
 
-        String searchStr = editText.getText().toString();
+        String searchStr = editText.getText().toString().trim();
         searchWord.setWord(searchStr);
 
         // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        SearchWord wordForDB = new SearchWord();
-        wordForDB.setWord(searchStr);
-        myRef.push().setValue(wordForDB);
+        fireBase = new FireBase();
+        fireBase.write(searchWord);
 
         query(searchWord.getWord());
     }
-
 
     private void query(String searchTermForQuery) {
 
@@ -158,10 +151,8 @@ public class SearchFragment extends Fragment {
 
     }
 
-
     @SuppressLint("SetTextI18n")
     private void writeTv(String response) {
-
 
         try {
             /************** получаем весь объект JSON из ответа *********/
@@ -202,8 +193,6 @@ public class SearchFragment extends Fragment {
 
                 requestInformation.setTitle(title);
                 requestInformation.setExtract(extract);
-                //                Log.d("__RETROFIT_", extract + '\n');
-
 
                 /******************************  Если пустой extract  ***************************/
 
@@ -215,7 +204,6 @@ public class SearchFragment extends Fragment {
                         firstPerformance = false;
                         query(searchWord.getWord() + "_(значения)");
                     }
-
                 }
             }
 
@@ -223,16 +211,8 @@ public class SearchFragment extends Fragment {
             textView.setText(requestInformation.getExtract());
 
         } catch (JSONException e) {
-            requestInformation.setTitle("Ошибка!");
-            requestInformation.setExtract("Напишите искомое слово");
-            Log.d("________", e + "");
+            mainText.setText("Ошибка!");
+            textView.setText("Напишите искомое слово");
         }
-
-
-        mainText.setText(requestInformation.getTitle());
-        textView.setText(requestInformation.getExtract());
-
     }
-
-
 }

@@ -37,13 +37,8 @@ public class HistoryFragment extends Fragment {
         adapter = new DataAdapter(inflater.getContext(), fireBase.getValue());
         /**************** устанавливаем для списка адаптер **************/
         recyclerView.setAdapter(adapter);
-
         fireBase.read(adapter);
-
 
         return v;
     }
-
-
-
 }

@@ -27,6 +27,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private List<SearchWord> history;
+    private FireBase fireBase;
 
     public DataAdapter(Context context, List<SearchWord> history) {
         this.history = history;
@@ -37,8 +38,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void deleteItems(List<SearchWord> deleteWord){
-        history = deleteWord;
+    public void deleteItems(List<SearchWord> listAfterDelete){
+        history = listAfterDelete;
         updateItems();
     }
 
@@ -61,7 +62,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                FireBase fireBase = new FireBase();
+                fireBase = new FireBase();
                 fireBase.delete(searchWord.getKey());// удаляем из БД
 
             }

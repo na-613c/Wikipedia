@@ -33,6 +33,4 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
     }
-
-
 }

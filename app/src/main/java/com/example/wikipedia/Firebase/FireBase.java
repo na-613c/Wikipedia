@@ -26,9 +26,10 @@ import static android.content.ContentValues.TAG;
 
 public class FireBase {
 
+    private SearchWord searchWordFromDb;
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    private List<SearchWord> value = new ArrayList<>();
 
+    private List<SearchWord> value = new ArrayList<>();
     public List<SearchWord> getValue() {
         return value;
     }
@@ -39,14 +40,16 @@ public class FireBase {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
-                SearchWord searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
+                searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
 
-                searchWordFromDb.setKey(dataSnapshot.getKey());
+                if (searchWordFromDb != null) {
+                    searchWordFromDb.setKey(dataSnapshot.getKey());
 
-                value.add(0,searchWordFromDb);
+                    value.add(0, searchWordFromDb);
 
-                adapter.updateItems();
-                Log.d("_FB__", "добавление ");
+                    adapter.updateItems();
+                    Log.d("_FB__", "добавление ");
+                }
 
             }
 
@@ -58,20 +61,25 @@ public class FireBase {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
 
-                SearchWord searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
-                searchWordFromDb.setKey(dataSnapshot.getKey());
+                if (searchWordFromDb != null) {
 
-                Log.d("_FB__", "удаление " + searchWordFromDb.getWord());
+                    searchWordFromDb.setKey(dataSnapshot.getKey());
 
-                for (int i = 0; i < value.size(); i++){
-                    if(value.get(i).getKey().equals(searchWordFromDb.getKey())){
-                        Log.d("_FB__", "Совпало " + value.get(i).getWord());
+                    Log.d("_FB__", "удаление " + searchWordFromDb.getWord());
 
-                        value.remove(i);
+                    for (int i = 0; i < value.size(); i++) {
+                        if (value.get(i).getKey().equals(searchWordFromDb.getKey())) {
+                            Log.d("_FB__", "Совпало " + value.get(i).getWord());
+
+                            value.remove(i);
+
+                        }
                     }
+                    adapter.deleteItems(value);
+
                 }
-                adapter.deleteItems(value);
             }
 
             @Override
@@ -105,6 +113,12 @@ public class FireBase {
 
     }
 
+    public void write(SearchWord wordForDB) {
 
+        if (!(wordForDB.getWord().equals(""))) {
+            myRef.push().setValue(wordForDB);
+        }
+
+    }
 
 }
