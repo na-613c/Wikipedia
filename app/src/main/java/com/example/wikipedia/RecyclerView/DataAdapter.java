@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wikipedia.Data.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
 
@@ -21,9 +22,9 @@ import java.util.List;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private List<String> history;
+    private List<SearchWord> history;
 
-    public DataAdapter(Context context, List<String> history) {
+    public DataAdapter(Context context, List<SearchWord> history) {
         this.history = history;
         this.inflater = LayoutInflater.from(context);
     }
@@ -45,8 +46,9 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final DataAdapter.ViewHolder holder, int position) {
 
-        final String searchWord = history.get(position);
-        holder.word.setText(searchWord);
+        final SearchWord searchWord = history.get(position);
+
+        holder.word.setText(searchWord.getWord());
 
 
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +61,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
                 history.remove(holder.getAdapterPosition()); // удаляем из списока истории
                 fireBase.setValue(history); // изменяем список для ресайклерСью
-                fireBase.delete(searchWord);// удаляем из БД
+                fireBase.delete(searchWord.getKey());// удаляем из БД
 
             }
         });

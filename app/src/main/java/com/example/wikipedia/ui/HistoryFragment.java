@@ -20,10 +20,8 @@ import com.example.wikipedia.RecyclerView.DataAdapter;
 public class HistoryFragment extends Fragment {
 
     private FireBase fireBase = new FireBase();
-
-
-    public DataAdapter adapter;
-    public RecyclerView recyclerView;
+    private DataAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

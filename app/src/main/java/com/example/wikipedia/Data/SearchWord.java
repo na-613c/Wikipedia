@@ -5,9 +5,13 @@ package com.example.wikipedia.Data;
  *               16.11.2019             *
  ***************************************/
 
+
+
 public class SearchWord {
 
     private String word;
+
+    private String key;
 
     public String getWord() {
         return word;
@@ -15,5 +19,13 @@ public class SearchWord {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

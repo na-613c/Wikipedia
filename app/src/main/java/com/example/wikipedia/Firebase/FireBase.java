@@ -11,7 +11,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
@@ -22,17 +21,19 @@ import static android.content.ContentValues.TAG;
 
 public class FireBase {
 
-    public List<String> getValue() {
+    private List<SearchWord> value = new ArrayList<>();
+
+    public List<SearchWord> getValue() {
         return value;
     }
 
-    public void setValue(List<String> value) {
+    public void setValue(List<SearchWord> value) {
         this.value = value;
     }
 
-    private List<String> value = new ArrayList<>();
-
     private static DataAdapter newAdapter;
+
+
 
     public void read(DataAdapter adapter) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
@@ -43,12 +44,13 @@ public class FireBase {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
                 SearchWord searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
 
+                searchWordFromDb.setKey(dataSnapshot.getKey());
 
-                if (searchWordFromDb != null) {
-                    value.add(searchWordFromDb.getWord());
+                Log.d("_FB__", searchWordFromDb.getKey());
+                value.add(searchWordFromDb);
 
-                    Log.d("_FB__", searchWordFromDb.getWord());
-                }
+
+                Log.d("_FB__", searchWordFromDb.getWord());
 
                 newAdapter.updateItems();
 
@@ -62,7 +64,7 @@ public class FireBase {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                newAdapter.updateItems();
             }
 
             @Override
@@ -75,22 +77,23 @@ public class FireBase {
 
             }
         });
+
+
     }
 
-    public void delete(String searchWord) {
+    public void delete(final String key) {
 
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        Query applesQuery = myRef.orderByChild("word").equalTo(searchWord);
+        final DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+
 
         /** *********************** Удаление из бд по названию searchWord ************************/
-        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 /** *** ***  Неопнятная фигня, которую заменю ** * * */
-                for (DataSnapshot wordSnapshot : dataSnapshot.getChildren()) {
-                    wordSnapshot.getRef().removeValue();
-                }
+
+                myRef.child(key).removeValue();
             }
 
             @Override
@@ -102,5 +105,7 @@ public class FireBase {
         newAdapter.updateItems();
 
     }
+
+
 
 }
