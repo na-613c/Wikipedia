@@ -5,8 +5,6 @@ package com.example.wikipedia.Data;
  *               16.11.2019             *
  ***************************************/
 
-
-
 public class SearchWord {
 
     private String word;

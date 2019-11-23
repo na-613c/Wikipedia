@@ -1,8 +1,12 @@
 package com.example.wikipedia.RecyclerView;
 
+/****************************************
+ *      created by Shavlovskii Ivan     *
+ *               23.11.2019             *
+ ***************************************/
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +37,10 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void deleteItems(List<SearchWord> deleteWord){
+        history = deleteWord;
+        updateItems();
+    }
 
     @NonNull
     @Override
@@ -50,22 +58,14 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
         holder.word.setText(searchWord.getWord());
 
-
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Log.d("__FB", "delete __ !");
-                Log.d("_FB__", holder.getAdapterPosition() + " - Элемент");
-
                 FireBase fireBase = new FireBase();
-
-                history.remove(holder.getAdapterPosition()); // удаляем из списока истории
-                fireBase.setValue(history); // изменяем список для ресайклерСью
                 fireBase.delete(searchWord.getKey());// удаляем из БД
 
             }
         });
-
 
     }
 
