@@ -6,6 +6,7 @@ package com.example.wikipedia.RecyclerView;
  ***************************************/
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,12 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<SearchWord> history;
     private FireBase fireBase;
+
+
+    AlertDialog.Builder ad;
+    Context context;
+
+
 
     public DataAdapter(Context context, List<SearchWord> history) {
         this.history = history;
