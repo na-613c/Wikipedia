@@ -6,8 +6,8 @@ package com.example.wikipedia.RecyclerView;
  ***************************************/
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikipedia.Data.SearchWord;
@@ -23,18 +24,14 @@ import com.example.wikipedia.R;
 
 import java.util.List;
 
+import static com.example.wikipedia.ui.HistoryFragment.checkIfEmpty;
+
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private List<SearchWord> history;
     private FireBase fireBase;
-
-
-    AlertDialog.Builder ad;
-    Context context;
-
-
 
     public DataAdapter(Context context, List<SearchWord> history) {
         this.history = history;
@@ -45,16 +42,21 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void deleteItems(List<SearchWord> listAfterDelete){
         history = listAfterDelete;
+        checkIfEmpty(history);
         updateItems();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @NonNull
     @Override
     public DataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.list_item, parent, false);
+
+        checkIfEmpty(history);
         return new ViewHolder(view);
     }
 

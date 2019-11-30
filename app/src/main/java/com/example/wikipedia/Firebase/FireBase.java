@@ -5,9 +5,11 @@ package com.example.wikipedia.Firebase;
  *               23.11.2019             *
  ***************************************/
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.wikipedia.Data.SearchWord;
 import com.example.wikipedia.RecyclerView.DataAdapter;
@@ -59,6 +61,7 @@ public class FireBase {
                 Log.d("_FB__", "изменение ");
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 searchWordFromDb = dataSnapshot.getValue(SearchWord.class);

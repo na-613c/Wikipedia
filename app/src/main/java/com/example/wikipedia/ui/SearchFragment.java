@@ -5,9 +5,7 @@ package com.example.wikipedia.ui;
  *               20.11.2019             *
  ***************************************/
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,43 +14,27 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.wikipedia.ApiInterface.ApiInterface;
 import com.example.wikipedia.Data.Launcher;
-import com.example.wikipedia.Data.RequestInformation;
 import com.example.wikipedia.Data.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+import com.example.wikipedia.Request.WikipediaQuery;
 
 public class SearchFragment extends Fragment {
 
     private Button button;
     private EditText editText;
-    private TextView textView;
-    private TextView mainText;
+    private static TextView textView;
+    private static TextView mainText;
 
     private SearchWord searchWord;
-    private RequestInformation requestInformation;
+    WikipediaQuery wikipediaQuery;
+
     private FireBase fireBase;
 
-    private Boolean firstPerformance = true;
-
-    private Call<String> call;
-
-    private String url;
-    private String title;
-    private String extract;
 
 
     @Override
@@ -61,11 +43,11 @@ public class SearchFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.search_fragment, container, false);
+
         button = (Button) v.findViewById(R.id.button);
         editText = (EditText) v.findViewById(R.id.edit_text);
         textView = (TextView) v.findViewById(R.id.textView);
         mainText = (TextView) v.findViewById(R.id.main_text);
-
 
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -77,7 +59,6 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
-
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -92,7 +73,6 @@ public class SearchFragment extends Fragment {
         Launcher.init();
 
         searchWord = Launcher.searchWord;
-        requestInformation = Launcher.requestInformation;
 
         String searchStr = editText.getText().toString().trim();
         searchWord.setWord(searchStr);
@@ -101,118 +81,14 @@ public class SearchFragment extends Fragment {
         fireBase = new FireBase();
         fireBase.write(searchWord);
 
-        query(searchWord.getWord());
+        wikipediaQuery = new WikipediaQuery();
+        wikipediaQuery.query(searchWord.getWord());
     }
 
-    private void query(String searchTermForQuery) {
 
-        retrofit2.Retrofit retrofit;
-
-        retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("https://ru.wikipedia.org/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-
-//&exintro
-        url = "w/api.php?format=json&utf8&action=query&prop=extracts&explaintext&indexpageids=1&titles=" + searchTermForQuery;
-
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        call = apiInterface.getPostWithID(url);
-
-
-        call.enqueue(new Callback<String>() {
-
-
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("Responsestring", response.body());
-
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-
-                        String jsonresponse = response.body();
-
-                        writeTv(jsonresponse);
-
-                    } else {
-                        Toast.makeText(getContext(), "Nothing returned", Toast.LENGTH_LONG).show();
-                        Log.i("onEmptyResponse", "Returned empty response");
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-
-
+    public static void writeInSearchFragment(String title, String content) {
+        mainText.setText(title);
+        textView.setText(content);
     }
 
-    @SuppressLint("SetTextI18n")
-    private void writeTv(String response) {
-
-        try {
-            /************** получаем весь объект JSON из ответа *********/
-            JSONObject obj = new JSONObject(response);
-            String strQuery = obj.optString("query");
-
-            /************************* получаем pageids **********************/
-
-            JSONObject objQuery = new JSONObject(strQuery);
-            String pageids = objQuery.getJSONArray("pageids").getString(0);
-            Log.d("__RETROFIT_pageids", pageids);
-
-            /************************* получаем страницу **********************/
-
-            JSONObject objPages = new JSONObject(strQuery);
-            String strPages = objPages.optString("pages");
-            Log.d("__RETROFIT_pages", strPages);
-
-            /************************* получаем данные с страницы c id = pageids **********************/
-
-            JSONObject objPagesIds = new JSONObject(strPages);
-            String strPagesIds = objPagesIds.optString(pageids);
-            Log.d("__RETROFIT_" + pageids, strPagesIds);
-
-            /******************************  Если нет страницы ***************************/
-
-            if (pageids.equals("-1")) {
-                Log.d("____1", "pageids.equals(\"-1\")");
-
-                requestInformation.setTitle("Ошибка!");
-                requestInformation.setExtract("Страница «" + searchWord.getWord() + "» не найдена");
-            } else {
-                Log.d("____1", "else pageids.equals(\"-1\")");
-                JSONObject objData = new JSONObject(strPagesIds);
-
-                title = objData.optString("title");
-                extract = objData.optString("extract");
-
-                requestInformation.setTitle(title);
-                requestInformation.setExtract(extract);
-
-                /******************************  Если пустой extract  ***************************/
-
-                if (requestInformation.getExtract().equals("")) {
-                    Log.d("____2", "requestInformation.getExtract().equals(\"\")");
-                    /******************************  запускаем 1 раз  ***************************/
-                    if (firstPerformance) {
-                        Log.d("____3", "firstPerformance");
-                        firstPerformance = false;
-                        query(searchWord.getWord() + "_(значения)");
-                    }
-                }
-            }
-
-            mainText.setText(requestInformation.getTitle());
-            textView.setText(requestInformation.getExtract());
-
-        } catch (JSONException e) {
-            mainText.setText("Ошибка!");
-            textView.setText("Напишите искомое слово");
-        }
-    }
 }

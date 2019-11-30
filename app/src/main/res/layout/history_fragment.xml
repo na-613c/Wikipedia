@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
 
+
+    <TextView
+        android:id="@+id/emptyHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Нет записей"
+        android:textSize="40sp"
+        android:background="@color/background"
+        android:textColor="#070707"
+        android:gravity="center"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
