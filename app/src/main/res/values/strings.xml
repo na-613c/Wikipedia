@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">𝐖𝐢𝐤𝐢𝐩𝐞𝐝𝐢𝐚</string>
     <string name="tab_text_1">Поиск</string>
-    <string name="tab_text_2">История</string>
+    <string name="tab_text_2">Результат</string>
+    <string name="tab_text_3">История</string>
     <string name="search">Найти</string>
     <string name="hint">Введите слово</string>
     <string name="word">слово</string>

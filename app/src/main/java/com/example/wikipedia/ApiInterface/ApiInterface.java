@@ -10,9 +10,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Url;
 
 
+
+
 public interface ApiInterface {
 
     @GET()
-    Call<String> getPostWithID(@Url String url);
+    //Observable<Response> getPostWithInfo(@Url String url);
+    Call<String> getPostWithInfo(@Url String url);
 
 }

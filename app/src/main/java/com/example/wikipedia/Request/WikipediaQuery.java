@@ -1,5 +1,10 @@
 package com.example.wikipedia.Request;
 
+/****************************************
+ *      created by Shavlovskii Ivan     *
+ *               01.12.2019             *
+ ***************************************/
+
 import android.annotation.SuppressLint;
 import android.util.Log;
 
@@ -14,38 +19,81 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-import static com.example.wikipedia.ui.SearchFragment.writeInSearchFragment;
+import static com.example.wikipedia.ui.ResultFragment.writeInSearchFragment;
 
 public class WikipediaQuery {
     private RequestInformation requestInformation;
     private Boolean firstPerformance = true;
 
-    private Call<String> call;
+//    private Observable<Response> observable;
 
     private String url;
     private String title;
     private String extract;
     private SearchWord searchWord;
+    private Call<String> call;
 
-    public void query(String searchTermForQuery) {
 
-        requestInformation = Launcher.requestInformation;
+
+//    public static String url;
+
+    public void queryApi(String searchTermForQuery) {
+/************* Launcher *************/
+        Launcher.initRequestInformation();
+/************* Launcher *************/
+
+        requestInformation = new RequestInformation();
         searchWord = Launcher.searchWord;
 
-        retrofit2.Retrofit retrofit;
+        Retrofit retrofit;
 
-        retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl("https://ru.wikipedia.org/")
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://ru.wikipedia.org/")/*
+                .addConverterFactory(GsonConverterFactory.create())     //В 2.0.0+, вам нужно явно указать, что вы хотите конвертер Gson
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())      //RXjava2 */
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
 
         //&exintro
-        url = "w/api.php?format=json&utf8&action=query&prop=extracts&explaintext&indexpageids=1&titles=" + searchTermForQuery;
+         url = "w/api.php?format=json&utf8&action=query&prop=extracts&explaintext&indexpageids=1&titles=" + searchTermForQuery;
 
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        call = apiInterface.getPostWithID(url);
+
+        call = apiInterface.getPostWithInfo(url);
+
+        /** не рабочий RXjava
+        observable =  apiInterface.getPostWithInfo(url);
+
+        observable.subscribeOn(Schedulers.newThread()) //отдаем новый тред для работы в background
+                .observeOn(AndroidSchedulers.mainThread()) //говорим, что обсервить хотим в main thread
+                .subscribe(new Observer<Response>() {
+
+                               @Override
+                               public void onSubscribe(Disposable d) {
+                                   Log.d("__rx_1","onSubscribe" + d.toString());
+                               }
+
+                               @Override
+                               public void onNext(Response value) {
+
+                                   Log.d("__rx_2","onNext"+ value.toString());
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   Log.d("__rx_3","onError " + e);
+                               }
+
+                               @Override
+                               public void onComplete() {
+                                   Log.d("__rx_4","onComplete");
+                               }
+                           }
+                );
+*/
 
         call.enqueue(new Callback<String>() {
 
@@ -125,7 +173,7 @@ public class WikipediaQuery {
                     if (firstPerformance) {
                         Log.d("____3", "firstPerformance");
                         firstPerformance = false;
-                        query(searchWord.getWord() + "_(значения)");
+                        queryApi(searchWord.getWord() + "_(значения)");
                     }
                 }
             }

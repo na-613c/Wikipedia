@@ -21,16 +21,16 @@ import com.example.wikipedia.Data.Launcher;
 import com.example.wikipedia.Data.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
+import com.example.wikipedia.Request.AddSearchWord;
 import com.example.wikipedia.Request.WikipediaQuery;
 
 public class SearchFragment extends Fragment {
 
     private Button button;
     private EditText editText;
-    private static TextView textView;
-    private static TextView mainText;
-
     private SearchWord searchWord;
+
+
     WikipediaQuery wikipediaQuery;
 
     private FireBase fireBase;
@@ -46,8 +46,7 @@ public class SearchFragment extends Fragment {
 
         button = (Button) v.findViewById(R.id.button);
         editText = (EditText) v.findViewById(R.id.edit_text);
-        textView = (TextView) v.findViewById(R.id.textView);
-        mainText = (TextView) v.findViewById(R.id.main_text);
+
 
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -70,25 +69,22 @@ public class SearchFragment extends Fragment {
     }
 
     private void startQuery() {
-        Launcher.init();
-
-        searchWord = Launcher.searchWord;
+        /************* Launcher *************/
 
         String searchStr = editText.getText().toString().trim();
-        searchWord.setWord(searchStr);
 
+
+        AddSearchWord addSearchWord = new AddSearchWord();
+        addSearchWord.addWord(searchStr);
+
+        searchWord = Launcher.searchWord;
         // Write a message to the database
         fireBase = new FireBase();
         fireBase.write(searchWord);
 
-        wikipediaQuery = new WikipediaQuery();
-        wikipediaQuery.query(searchWord.getWord());
     }
 
 
-    public static void writeInSearchFragment(String title, String content) {
-        mainText.setText(title);
-        textView.setText(content);
-    }
+
 
 }

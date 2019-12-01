@@ -10,9 +10,11 @@ public class Launcher {
     public static RequestInformation requestInformation;
     public static SearchWord searchWord;
 
-    public static void init() {
+    public static void initRequestInformation() {
         requestInformation = new RequestInformation();
-        searchWord = new SearchWord();
+    }
 
+    public static void initSearchWord() {
+        searchWord = new SearchWord();
     }
 }

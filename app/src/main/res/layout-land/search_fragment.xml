@@ -9,37 +9,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:freezesText="true"
+            android:text="@string/app_name"
+            android:textSize="30sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/main_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:freezesText="true"
-                android:text="@string/app_name"
-                android:textSize="30sp" />
+
 
             <EditText
                 android:id="@+id/edit_text"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="50dp"
                 android:background="@drawable/rounded_edittext"
                 android:drawableLeft="@android:drawable/ic_search_category_default"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="80dp"
                 android:gravity="center_vertical"
                 android:hint="@string/input_word"
                 android:imeOptions="actionDone"
@@ -49,35 +50,17 @@
 
             <Button
                 android:id="@+id/button"
+                android:layout_weight="2"
                 android:background="@drawable/border_button"
-                android:paddingLeft="50dp"
-                android:paddingRight="60dp"
-                android:layout_width="wrap_content"
+                android:layout_marginRight="40dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
                 android:text="@string/search" />
 
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:freezesText="true"
-                android:justificationMode="inter_word"
-                android:textColor="#000" />
-
-        </ScrollView>
 
     </LinearLayout>
 

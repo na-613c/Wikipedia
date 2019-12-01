@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wikipedia.Data.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
+import com.example.wikipedia.Request.AddSearchWord;
 
 import java.util.List;
 
@@ -77,6 +79,20 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             }
         });
 
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                String searchWord = holder.word.getText().toString();
+
+                /************* Launcher *************/
+                AddSearchWord addSearchWord = new AddSearchWord();
+                addSearchWord.addWord(searchWord);
+
+
+
+            }
+        });
+
     }
 
     @Override
@@ -88,11 +104,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
         final TextView word;
         final ImageButton btn_del;
+        final LinearLayout item;
 
         ViewHolder(View view) {
             super(view);
             word = (TextView) view.findViewById(R.id.word);
             btn_del = (ImageButton) view.findViewById(R.id.btn_del);
+            item = (LinearLayout) view.findViewById(R.id.item);
         }
     }
 }
