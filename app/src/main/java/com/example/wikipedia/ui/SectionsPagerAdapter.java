@@ -1,10 +1,5 @@
 package com.example.wikipedia.ui;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               16.11.2019             *
- ***************************************/
-
 import android.content.Context;
 
 import androidx.annotation.Nullable;

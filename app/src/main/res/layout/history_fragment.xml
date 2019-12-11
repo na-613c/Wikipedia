@@ -11,11 +11,11 @@
         android:id="@+id/emptyHistory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Нет записей"
-        android:textSize="40sp"
         android:background="@color/background"
+        android:gravity="center"
+        android:text="Нет записей"
         android:textColor="#070707"
-        android:gravity="center"/>
+        android:textSize="40sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

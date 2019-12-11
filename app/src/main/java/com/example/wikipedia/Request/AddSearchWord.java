@@ -1,12 +1,12 @@
 package com.example.wikipedia.Request;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               01.12.2019             *
- ***************************************/
+/********************************
+ *      Shavlovskii Ivan        *
+ *        01.12.2019            *
+ *******************************/
 
-import com.example.wikipedia.Data.Launcher;
-import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Domain.Launcher;
+import com.example.wikipedia.Domain.SearchWord;
 
 public class AddSearchWord {
     private SearchWord searchWord;

@@ -43,17 +43,16 @@
 
         <Button
             android:id="@+id/button"
-            android:background="@drawable/border_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:shadowRadius="@android:integer/config_longAnimTime"
-            android:shadowColor="#000"
+            android:background="@drawable/border_button"
             android:paddingLeft="50dp"
             android:paddingRight="60dp"
+            android:shadowColor="#000"
+            android:shadowRadius="@android:integer/config_longAnimTime"
             android:text="@string/search" />
-
 
 
     </LinearLayout>

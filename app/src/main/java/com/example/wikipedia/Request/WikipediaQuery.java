@@ -1,17 +1,13 @@
 package com.example.wikipedia.Request;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               01.12.2019             *
- ***************************************/
 
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.example.wikipedia.ApiInterface.ApiInterface;
-import com.example.wikipedia.Data.Launcher;
-import com.example.wikipedia.Data.RequestInformation;
-import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Domain.Launcher;
+import com.example.wikipedia.Domain.RequestInformation;
+import com.example.wikipedia.Domain.SearchWord;
+import com.example.wikipedia.ui.SearchFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,26 +20,27 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static com.example.wikipedia.ui.ResultFragment.writeInSearchFragment;
 
+
 public class WikipediaQuery {
     private RequestInformation requestInformation;
     private Boolean firstPerformance = true;
-
-//    private Observable<Response> observable;
 
     private String url;
     private String title;
     private String extract;
     private SearchWord searchWord;
     private Call<String> call;
+    private String resultStr;
+    private JSONObject obj;
 
+    private String err = "java.net.UnknownHostException: Unable to resolve host \"ru.wikipedia.org\": No address associated with hostname";
+    private int counterErr = 299;
 
-
-//    public static String url;
 
     public void queryApi(String searchTermForQuery) {
-/************* Launcher *************/
+    /************* Launcher *************/
         Launcher.initRequestInformation();
-/************* Launcher *************/
+    /************* Launcher *************/
 
         requestInformation = new RequestInformation();
         searchWord = Launcher.searchWord;
@@ -51,49 +48,16 @@ public class WikipediaQuery {
         Retrofit retrofit;
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://ru.wikipedia.org/")/*
-                .addConverterFactory(GsonConverterFactory.create())     //В 2.0.0+, вам нужно явно указать, что вы хотите конвертер Gson
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())      //RXjava2 */
+                .baseUrl("https://ru.wikipedia.org/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
 
-        //&exintro
-         url = "w/api.php?format=json&utf8&action=query&prop=extracts&explaintext&indexpageids=1&titles=" + searchTermForQuery;
+        url = "w/api.php?format=json&utf8&action=query&prop=extracts&explaintext&indexpageids=1&titles=" + searchTermForQuery;
 
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         call = apiInterface.getPostWithInfo(url);
 
-        /** не рабочий RXjava
-        observable =  apiInterface.getPostWithInfo(url);
-
-        observable.subscribeOn(Schedulers.newThread()) //отдаем новый тред для работы в background
-                .observeOn(AndroidSchedulers.mainThread()) //говорим, что обсервить хотим в main thread
-                .subscribe(new Observer<Response>() {
-
-                               @Override
-                               public void onSubscribe(Disposable d) {
-                                   Log.d("__rx_1","onSubscribe" + d.toString());
-                               }
-
-                               @Override
-                               public void onNext(Response value) {
-
-                                   Log.d("__rx_2","onNext"+ value.toString());
-                               }
-
-                               @Override
-                               public void onError(Throwable e) {
-                                   Log.d("__rx_3","onError " + e);
-                               }
-
-                               @Override
-                               public void onComplete() {
-                                   Log.d("__rx_4","onComplete");
-                               }
-                           }
-                );
-*/
 
         call.enqueue(new Callback<String>() {
 
@@ -116,6 +80,15 @@ public class WikipediaQuery {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
 
+                if (t.toString().equals(err)) {
+                    queryApi(searchTermForQuery);
+                    Log.d("__ERR_R", "" + counterErr);
+                    counterErr++;
+                    if (counterErr == 300) {
+                        SearchFragment.internetMessage();
+                        counterErr = 0;
+                    }
+                }
             }
         });
 
@@ -125,66 +98,74 @@ public class WikipediaQuery {
     @SuppressLint("SetTextI18n")
     private void searchInJSON(String response) {
 
-        try {
-            /************** получаем весь объект JSON из ответа *********/
-            JSONObject obj = new JSONObject(response);
-            String strQuery = obj.optString("query");
+        /************** получаем весь объект JSON из ответа *********/
 
-            /************************* получаем pageids **********************/
+        String strQuery = parseJSON(response, "query");
 
-            JSONObject objQuery = new JSONObject(strQuery);
-            String pageids = objQuery.getJSONArray("pageids").getString(0);
-            Log.d("__RETROFIT_pageids", pageids);
+        /************************* получаем pageids **********************/
 
-            /************************* получаем страницу **********************/
+        String pageids = parseJSON(strQuery, "pageids");
 
-            JSONObject objPages = new JSONObject(strQuery);
-            String strPages = objPages.optString("pages");
-            Log.d("__RETROFIT_pages", strPages);
+        /************************* получаем страницу **********************/
 
-            /************************* получаем данные с страницы c id = pageids **********************/
+        String strPages = parseJSON(strQuery, "pages");
 
-            JSONObject objPagesIds = new JSONObject(strPages);
-            String strPagesIds = objPagesIds.optString(pageids);
-            Log.d("__RETROFIT_" + pageids, strPagesIds);
+        /************************* получаем данные с страницы c id = pageids **********************/
+        String strPagesIds = parseJSON(strPages, pageids);
 
-            /******************************  Если нет страницы ***************************/
+        /******************************  Если нет страницы ***************************/
 
-            if (pageids.equals("-1")) {
-                Log.d("____1", "pageids.equals(\"-1\")");
+        if (pageids.equals("-1")) {
 
+            title = parseJSON(strPagesIds, "title");
+
+            if (searchWord.getWord().equals("")) {
+                requestInformation.setTitle("Ошибка!");
+                requestInformation.setExtract("Напишите искомое слово");
+            } else {
                 requestInformation.setTitle("Ошибка!");
                 requestInformation.setExtract("Страница «" + searchWord.getWord() + "» не найдена");
-            } else {
-                Log.d("____1", "else pageids.equals(\"-1\")");
-                JSONObject objData = new JSONObject(strPagesIds);
-
-                title = objData.optString("title");
-                extract = objData.optString("extract");
-
-                requestInformation.setTitle(title);
-                requestInformation.setExtract(extract);
-
-                /******************************  Если пустой extract  ***************************/
-
-                if (requestInformation.getExtract().equals("")) {
-                    Log.d("____2", "requestInformation.getExtract().equals(\"\")");
-                    /******************************  запускаем 1 раз  ***************************/
-                    if (firstPerformance) {
-                        Log.d("____3", "firstPerformance");
-                        firstPerformance = false;
-                        queryApi(searchWord.getWord() + "_(значения)");
-                    }
-                }
             }
 
-            writeInSearchFragment(requestInformation.getTitle(),requestInformation.getExtract());
+        } else {
 
+            title = parseJSON(strPagesIds, "title");
+            extract = parseJSON(strPagesIds, "extract");
 
-        } catch (JSONException e) {
-            writeInSearchFragment("Ошибка!","Напишите искомое слово");
+            requestInformation.setTitle(title);
+            requestInformation.setExtract(extract);
+
+            /******************************  Если пустой extract  ***************************/
+
+            if (requestInformation.getExtract().equals("")) {
+                Log.d("____2", "requestInformation.getExtract().equals(\"\")");
+                /******************************  запускаем 1 раз  ***************************/
+                if (firstPerformance) {
+                    firstPerformance = false;
+                    queryApi(searchWord.getWord() + "_(значения)");
+                }
+            }
         }
+
+        writeInSearchFragment(requestInformation.getTitle(), requestInformation.getExtract());
+
+
     }
 
+    private String parseJSON(String str, String key) {
 
+        try {
+            obj = new JSONObject(str);
+        } catch (JSONException e) {
+            Log.d("err", e.toString());
+        }
+
+        try {
+            resultStr = obj.getJSONArray(key).getString(0);
+        } catch (JSONException e) {
+            resultStr = obj.optString(key);
+        }
+
+        return resultStr;
+    }
 }

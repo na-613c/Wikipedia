@@ -1,9 +1,4 @@
-package com.example.wikipedia.Data;
-
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               16.11.2019             *
- ***************************************/
+package com.example.wikipedia.Domain;
 
 public class Launcher {
 

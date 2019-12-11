@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
 import com.example.wikipedia.Request.AddSearchWord;
@@ -45,7 +45,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void deleteItems(List<SearchWord> listAfterDelete){
+    public void deleteItems(List<SearchWord> listAfterDelete) {
         history = listAfterDelete;
         checkIfEmpty(history);
         updateItems();
@@ -87,9 +87,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                 /************* Launcher *************/
                 AddSearchWord addSearchWord = new AddSearchWord();
                 addSearchWord.addWord(searchWord);
-
-
-
             }
         });
 

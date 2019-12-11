@@ -1,9 +1,5 @@
 package com.example.wikipedia.ui;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               16.11.2019             *
- ***************************************/
 
 import android.annotation.SuppressLint;
 import android.os.Build;
@@ -17,7 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
 import com.example.wikipedia.RecyclerView.DataAdapter;

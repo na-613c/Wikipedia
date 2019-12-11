@@ -1,9 +1,5 @@
 package com.example.wikipedia.Firebase;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               23.11.2019             *
- ***************************************/
 
 import android.os.Build;
 import android.util.Log;
@@ -11,7 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.RecyclerView.DataAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +28,7 @@ public class FireBase {
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
     private List<SearchWord> value = new ArrayList<>();
+
     public List<SearchWord> getValue() {
         return value;
     }
@@ -41,7 +38,7 @@ public class FireBase {
         // Read from the database
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
 
                 if (searchWordFromDb != null) {
@@ -50,14 +47,13 @@ public class FireBase {
                     value.add(0, searchWordFromDb);
 
                     adapter.updateItems();
-                    Log.d("_FB__", "добавление ");
+                    Log.d("_FB__", "добавление \n");
                 }
 
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
-
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
                 Log.d("_FB__", "изменение ");
             }
 

@@ -1,11 +1,8 @@
 package com.example.wikipedia.ui;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               20.11.2019             *
- ***************************************/
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,29 +11,27 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.wikipedia.Data.Launcher;
-import com.example.wikipedia.Data.SearchWord;
+import com.example.wikipedia.Domain.Launcher;
+import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
 import com.example.wikipedia.Request.AddSearchWord;
-import com.example.wikipedia.Request.WikipediaQuery;
 
 public class SearchFragment extends Fragment {
 
     private Button button;
     private EditText editText;
+    private static Toast toast;
+
     private SearchWord searchWord;
-
-
-    WikipediaQuery wikipediaQuery;
-
     private FireBase fireBase;
 
 
-
+    @SuppressLint("ShowToast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +41,11 @@ public class SearchFragment extends Fragment {
 
         button = (Button) v.findViewById(R.id.button);
         editText = (EditText) v.findViewById(R.id.edit_text);
+
+        toast = Toast.makeText(getActivity(),
+                "Check your internet connection!",
+                Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
 
 
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -84,7 +84,9 @@ public class SearchFragment extends Fragment {
 
     }
 
-
+    public static void internetMessage() {
+        toast.show();
+    }
 
 
 }

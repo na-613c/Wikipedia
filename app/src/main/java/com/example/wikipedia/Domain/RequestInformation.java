@@ -1,9 +1,5 @@
-package com.example.wikipedia.Data;
+package com.example.wikipedia.Domain;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               16.11.2019             *
- ***************************************/
 
 public class RequestInformation {
 
