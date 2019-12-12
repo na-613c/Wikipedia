@@ -34,7 +34,6 @@ public class WikipediaQuery {
     private JSONObject obj;
 
     private String err = "java.net.UnknownHostException: Unable to resolve host \"ru.wikipedia.org\": No address associated with hostname";
-    private int counterErr = 299;
 
 
     public void queryApi(String searchTermForQuery) {
@@ -69,7 +68,7 @@ public class WikipediaQuery {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
 
-                        SearchFragment.successfulMessage();
+                        SearchFragment.hideError();
 
                         String jsonresponse = response.body();
 
@@ -84,12 +83,9 @@ public class WikipediaQuery {
 
                 if (t.toString().equals(err)) {
                     queryApi(searchTermForQuery);
-                    Log.d("__ERR_R", "" + counterErr);
-                    counterErr++;
-                    if (counterErr == 300) {
-                        SearchFragment.internetMessage();
-                        counterErr = 0;
-                    }
+
+                     SearchFragment.showError();
+
                 }
             }
         });

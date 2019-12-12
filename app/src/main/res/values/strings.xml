@@ -8,4 +8,5 @@
     <string name="word">слово</string>
     <string name="delete">Удалить</string>
     <string name="input_word">Введите слово</string>
+    <string name="hint_input_word">Введите искомое слово</string>
 </resources>

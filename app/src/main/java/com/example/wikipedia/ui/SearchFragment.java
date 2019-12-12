@@ -2,7 +2,6 @@ package com.example.wikipedia.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -20,13 +18,14 @@ import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
 import com.example.wikipedia.Request.AddSearchWord;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SearchFragment extends Fragment {
 
     private Button button;
-    private EditText editText;
-    private static Toast toastErr;
-    private static Toast toastSuccessful;
+
+    private static TextInputLayout mTextInputLayout;
+    private EditText mEditText;
 
     private SearchWord searchWord;
     private FireBase fireBase;
@@ -41,20 +40,12 @@ public class SearchFragment extends Fragment {
         View v = inflater.inflate(R.layout.search_fragment, container, false);
 
         button = (Button) v.findViewById(R.id.button);
-        editText = (EditText) v.findViewById(R.id.edit_text);
 
-        toastErr = Toast.makeText(getActivity(),
-                "Проверьте интернет соеденение!",
-                Toast.LENGTH_SHORT);
-        toastErr.setGravity(Gravity.CENTER, 0, 300);
-
-        toastSuccessful = Toast.makeText(getActivity(),
-                "Запрос выполнен!",
-                Toast.LENGTH_SHORT);
-        toastSuccessful.setGravity(Gravity.CENTER, 0, 300);
+        mTextInputLayout = (TextInputLayout) v.findViewById(R.id.textInputLayout);
+        mEditText = (EditText) v.findViewById(R.id.editTextName);
 
 
-        editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        mEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -77,7 +68,7 @@ public class SearchFragment extends Fragment {
     private void startQuery() {
         /************* Launcher *************/
 
-        String searchStr = editText.getText().toString().trim();
+        String searchStr = mEditText.getText().toString().trim();
 
 
         AddSearchWord addSearchWord = new AddSearchWord();
@@ -90,13 +81,13 @@ public class SearchFragment extends Fragment {
 
     }
 
-    public static void internetMessage() {
-        toastErr.show();
+    public static void showError() {
+        mTextInputLayout.setError("Проверьте интернет соеденение");
+
     }
 
-    public static void successfulMessage(){
-        toastSuccessful.show();
+    public static void hideError() {
+        mTextInputLayout.setError("");
     }
-
 
 }
