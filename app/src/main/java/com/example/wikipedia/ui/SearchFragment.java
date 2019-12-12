@@ -25,7 +25,8 @@ public class SearchFragment extends Fragment {
 
     private Button button;
     private EditText editText;
-    private static Toast toast;
+    private static Toast toastErr;
+    private static Toast toastSuccessful;
 
     private SearchWord searchWord;
     private FireBase fireBase;
@@ -42,10 +43,15 @@ public class SearchFragment extends Fragment {
         button = (Button) v.findViewById(R.id.button);
         editText = (EditText) v.findViewById(R.id.edit_text);
 
-        toast = Toast.makeText(getActivity(),
-                "Check your internet connection!",
+        toastErr = Toast.makeText(getActivity(),
+                "Проверьте интернет соеденение!",
                 Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 300);
+        toastErr.setGravity(Gravity.CENTER, 0, 300);
+
+        toastSuccessful = Toast.makeText(getActivity(),
+                "Запрос выполнен!",
+                Toast.LENGTH_SHORT);
+        toastSuccessful.setGravity(Gravity.CENTER, 0, 300);
 
 
         editText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -85,7 +91,11 @@ public class SearchFragment extends Fragment {
     }
 
     public static void internetMessage() {
-        toast.show();
+        toastErr.show();
+    }
+
+    public static void successfulMessage(){
+        toastSuccessful.show();
     }
 
 

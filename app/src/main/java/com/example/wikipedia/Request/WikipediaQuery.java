@@ -38,9 +38,9 @@ public class WikipediaQuery {
 
 
     public void queryApi(String searchTermForQuery) {
-    /************* Launcher *************/
+        /************* Launcher *************/
         Launcher.initRequestInformation();
-    /************* Launcher *************/
+        /************* Launcher *************/
 
         requestInformation = new RequestInformation();
         searchWord = Launcher.searchWord;
@@ -68,6 +68,8 @@ public class WikipediaQuery {
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
+
+                        SearchFragment.successfulMessage();
 
                         String jsonresponse = response.body();
 
