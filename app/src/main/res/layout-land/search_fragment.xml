@@ -42,14 +42,18 @@
                 android:layout_marginRight="80dp"
                 android:textSize="23sp"
                 android:hint="@string/hint_input_word"
-                app:errorEnabled="true">
+                app:boxStrokeColor="#000000"
+                app:boxStrokeErrorColor="#E00B0B"
+                app:errorTextColor="#E00B0B"
+                app:hintTextColor="#020202">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,6 +63,7 @@
 
             <Button
                 android:id="@+id/button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -66,8 +71,14 @@
                 android:layout_weight="2"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="@string/search" />
-
+                android:text="@string/search"
+                android:textColor="#000"
+                app:strokeColor="#BA000000"
+                android:textSize="15sp"
+                app:strokeWidth="1dp"
+                app:cornerRadius="2dp"
+                android:paddingVertical="5dp"
+/>
         </LinearLayout>
 
 

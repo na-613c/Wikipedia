@@ -82,7 +82,7 @@ public class SearchFragment extends Fragment {
     }
 
     public static void showError() {
-        mTextInputLayout.setError("Проверьте интернет соеденение");
+        mTextInputLayout.setError("Проверьте интернет соеденение!");
 
     }
 
