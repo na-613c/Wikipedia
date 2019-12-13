@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
@@ -31,17 +30,16 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:orientation="horizontal">
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="80dp"
-                android:textSize="23sp"
+                android:layout_weight="1"
                 android:hint="@string/hint_input_word"
+                android:textSize="23sp"
                 app:boxStrokeColor="#000000"
                 app:boxStrokeErrorColor="#E00B0B"
                 app:errorTextColor="#E00B0B"
@@ -52,14 +50,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:textSize="25sp"
-                    />
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
 
             <Button
                 android:id="@+id/button"
@@ -69,18 +62,16 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="40dp"
                 android:layout_weight="2"
+                android:paddingVertical="5dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:text="@string/search"
                 android:textColor="#000"
-                app:strokeColor="#BA000000"
                 android:textSize="15sp"
-                app:strokeWidth="1dp"
                 app:cornerRadius="2dp"
-                android:paddingVertical="5dp"
-/>
+                app:strokeColor="#BA000000"
+                app:strokeWidth="1dp" />
         </LinearLayout>
-
 
     </LinearLayout>
 

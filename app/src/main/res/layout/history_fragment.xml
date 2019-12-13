@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#6B6B6B">
 
-
     <TextView
         android:id="@+id/emptyHistory"
         android:layout_width="match_parent"
