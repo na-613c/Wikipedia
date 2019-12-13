@@ -1,9 +1,7 @@
 package com.example.wikipedia.RecyclerView;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
-import com.example.wikipedia.Request.AddSearchWord;
+import com.example.wikipedia.Request.WikipediaQuery;
 
 import java.util.List;
 
@@ -31,23 +28,23 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private List<SearchWord> history;
     private FireBase fireBase;
 
-    public DataAdapter(Context context, List<SearchWord> history) {
-        this.history = history;
-        this.inflater = LayoutInflater.from(context);
+    public DataAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
     }
 
-    public void updateItems() {
+    public void updateItems(List<SearchWord> list) {
+        history = list;
+        checkIfEmpty(history);
         notifyDataSetChanged();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void deleteItems(List<SearchWord> listAfterDelete) {
         history = listAfterDelete;
         checkIfEmpty(history);
-        updateItems();
+        notifyDataSetChanged();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @NonNull
     @Override
     public DataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,7 +55,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final DataAdapter.ViewHolder holder, int position) {
 
@@ -78,20 +74,27 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         holder.item.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String searchWord = holder.word.getText().toString();
+                String searchWordStr = holder.word.getText().toString();
 
-                /************* Launcher *************/
-                AddSearchWord addSearchWord = new AddSearchWord();
-                addSearchWord.addWord(searchWord);
+                WikipediaQuery wikipediaQuery = new WikipediaQuery();
+                wikipediaQuery.queryApi(searchWordStr);
             }
         });
 
     }
 
+
     @Override
     public int getItemCount() {
-        return history.size();
+
+        try {
+            return history.size();
+        } catch (Exception e) {
+            return 0;
+        }
+
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 

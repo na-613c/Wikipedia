@@ -1,15 +1,12 @@
 package com.example.wikipedia.ui;
 
 
-import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,13 +30,12 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.history_fragment, container, false);
-        emptyHistory = (TextView) v.findViewById(R.id.emptyHistory);
 
+        emptyHistory = (TextView) v.findViewById(R.id.emptyHistory);
         recyclerView = (RecyclerView) v.findViewById(R.id.list);
 
         /******************** создаем адаптер *******************/
-
-        adapter = new DataAdapter(inflater.getContext(), fireBase.getValue());
+        adapter = new DataAdapter(inflater.getContext());
         /**************** устанавливаем для списка адаптер **************/
         recyclerView.setAdapter(adapter);
         fireBase.read(adapter);
@@ -47,14 +43,12 @@ public class HistoryFragment extends Fragment {
         return v;
     }
 
-    @SuppressLint("WrongConstant")
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static void checkIfEmpty(List<SearchWord> history){
+    public static void checkIfEmpty(List<SearchWord> history) {
 
-        if(history.size() == 0){
+        if (history.size() == 0) {
             recyclerView.setVisibility(View.INVISIBLE);
             emptyHistory.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             recyclerView.setVisibility(View.VISIBLE);
             emptyHistory.setVisibility(View.INVISIBLE);
         }

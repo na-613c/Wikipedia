@@ -4,9 +4,7 @@ package com.example.wikipedia.Request;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.example.wikipedia.Domain.Launcher;
 import com.example.wikipedia.Domain.RequestInformation;
-import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.ui.SearchFragment;
 
 import org.json.JSONException;
@@ -18,31 +16,38 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static com.example.wikipedia.MainActivity.searchWord;
 import static com.example.wikipedia.ui.ResultFragment.writeInSearchFragment;
 
 
 public class WikipediaQuery {
     private RequestInformation requestInformation;
-    private Boolean firstPerformance = true;
+    private JSONObject obj;
+
+    private Boolean isFirstRequest = true;
 
     private String url;
     private String title;
     private String extract;
-    private SearchWord searchWord;
-    private Call<String> call;
     private String resultStr;
-    private JSONObject obj;
-
     private String err = "java.net.UnknownHostException: Unable to resolve host \"ru.wikipedia.org\": No address associated with hostname";
 
+    private Call<String> call;
 
-    public void queryApi(String searchTermForQuery) {
+
+
+
+
+    public void queryApi(final String searchTermForQuery) {
         /************* Launcher *************/
-        Launcher.initRequestInformation();
+
         /************* Launcher *************/
 
         requestInformation = new RequestInformation();
-        searchWord = Launcher.searchWord;
+
+        if (isFirstRequest) {
+            searchWord.setWord(searchTermForQuery);
+        }
 
         Retrofit retrofit;
 
@@ -57,9 +62,7 @@ public class WikipediaQuery {
 
         call = apiInterface.getPostWithInfo(url);
 
-
         call.enqueue(new Callback<String>() {
-
 
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -84,8 +87,7 @@ public class WikipediaQuery {
                 if (t.toString().equals(err)) {
                     queryApi(searchTermForQuery);
 
-                     SearchFragment.showError("Проверьте интернет соеденение!");
-
+                    SearchFragment.showError("Проверьте интернет соеденение!");
                 }
             }
         });
@@ -96,52 +98,41 @@ public class WikipediaQuery {
     @SuppressLint("SetTextI18n")
     private void searchInJSON(String response) {
 
-        /************** получаем весь объект JSON из ответа *********/
+        String strQuery = parseJSON(response, "query");//получаем весь объект JSON из ответа
 
-        String strQuery = parseJSON(response, "query");
+        String pageids = parseJSON(strQuery, "pageids");//получаем pageids
 
-        /************************* получаем pageids **********************/
+        String strPages = parseJSON(strQuery, "pages");//получаем страницу
 
-        String pageids = parseJSON(strQuery, "pageids");
+        String strPagesIds = parseJSON(strPages, pageids);//получаем данные с страницы c id = pageids
 
-        /************************* получаем страницу **********************/
-
-        String strPages = parseJSON(strQuery, "pages");
-
-        /************************* получаем данные с страницы c id = pageids **********************/
-        String strPagesIds = parseJSON(strPages, pageids);
-
-        /******************************  Если нет страницы ***************************/
-
-        if (pageids.equals("-1")) {
+        if (pageids.equals("-1")) {//Если нет страницы
 
             title = parseJSON(strPagesIds, "title");
 
-            if (searchWord.getWord().equals("")) {
-                SearchFragment.showError("Напишите искомое слово!");
-                requestInformation.setTitle("𝐖𝐢𝐤𝐢𝐩𝐞𝐝𝐢𝐚");
-            } else {
-                requestInformation.setTitle("Ошибка!");
-                requestInformation.setExtract("Страница «" + searchWord.getWord() + "» не найдена");
-            }
+            writeInRequestInformation("Ошибка!", "Страница «" + searchWord.getWord() + "» не найдена");
+
+            SearchFragment.showError("Страница «" + searchWord.getWord() + "» не найдена");
 
         } else {
 
             title = parseJSON(strPagesIds, "title");
             extract = parseJSON(strPagesIds, "extract");
 
-            requestInformation.setTitle(title);
-            requestInformation.setExtract(extract);
+            writeInRequestInformation(title, extract);
 
-            /******************************  Если пустой extract  ***************************/
-
-            if (requestInformation.getExtract().equals("")) {
+            if (requestInformation.getExtract().equals("")) {//Если пустой extract
                 Log.d("____2", "requestInformation.getExtract().equals(\"\")");
                 /******************************  запускаем 1 раз  ***************************/
-                if (firstPerformance) {
-                    firstPerformance = false;
+
+                if (searchWord.getWord().equals("")) {// если пустое слово
+                    SearchFragment.showError("Напишите искомое слово!");
+                    writeInRequestInformation("𝐖𝐢𝐤𝐢𝐩𝐞𝐝𝐢𝐚", "");
+                } else if (isFirstRequest) {//запускаем 1 раз
+                    isFirstRequest = false;
                     queryApi(searchWord.getWord() + "_(значения)");
                 }
+
             }
         }
         writeInSearchFragment(requestInformation.getTitle(), requestInformation.getExtract());
@@ -151,16 +142,22 @@ public class WikipediaQuery {
 
         try {
             obj = new JSONObject(str);
-        } catch (JSONException e) {
-            Log.d("err", e.toString());
-        }
 
-        try {
-            resultStr = obj.getJSONArray(key).getString(0);
+            try {
+                resultStr = obj.getJSONArray(key).getString(0);
+            } catch (JSONException e) {
+                resultStr = obj.optString(key);
+            }
+
         } catch (JSONException e) {
-            resultStr = obj.optString(key);
+            SearchFragment.showError(e.toString());
         }
 
         return resultStr;
+    }
+
+    private void writeInRequestInformation(String title, String extract) {
+        requestInformation.setTitle(title);
+        requestInformation.setExtract(extract);
     }
 }

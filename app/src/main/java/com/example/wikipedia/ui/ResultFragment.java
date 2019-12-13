@@ -27,7 +27,6 @@ public class ResultFragment extends Fragment {
         return v;
     }
 
-
     public static void writeInSearchFragment(String title, String content) {
         mainText.setText(title);
         textView.setText(content);

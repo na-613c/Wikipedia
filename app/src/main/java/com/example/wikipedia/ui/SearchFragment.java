@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.wikipedia.Domain.Launcher;
-import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.Firebase.FireBase;
 import com.example.wikipedia.R;
-import com.example.wikipedia.Request.AddSearchWord;
+import com.example.wikipedia.Request.WikipediaQuery;
 import com.google.android.material.textfield.TextInputLayout;
+
+import static com.example.wikipedia.MainActivity.searchWord;
 
 public class SearchFragment extends Fragment {
 
@@ -29,7 +29,7 @@ public class SearchFragment extends Fragment {
     private static TextInputLayout mTextInputLayout;
     private EditText mEditText;
 
-    private SearchWord searchWord;
+
     private FireBase fireBase;
 
 
@@ -41,11 +41,9 @@ public class SearchFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.search_fragment, container, false);
 
-        button = (Button) v.findViewById(R.id.button);
-
         mTextInputLayout = (TextInputLayout) v.findViewById(R.id.textInputLayout);
         mEditText = (EditText) v.findViewById(R.id.editTextName);
-
+        button = (Button) v.findViewById(R.id.button);
 
         mEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -71,13 +69,12 @@ public class SearchFragment extends Fragment {
         /************* Launcher *************/
         searchStr = mEditText.getText().toString().trim();
 
-        AddSearchWord addSearchWord = new AddSearchWord();
-        addSearchWord.addWord(searchStr);
+        searchWord.setWord(searchStr);
 
-        searchWord = Launcher.searchWord;
+        WikipediaQuery wikipediaQuery = new WikipediaQuery();
+        wikipediaQuery.queryApi(searchStr);
 
-        if (!searchStr.equals(oldWord)) {
-            // Write a message to the database
+        if (!searchStr.equals(oldWord) & !(searchStr.equals(""))) {
             fireBase = new FireBase();
             fireBase.write(searchWord);
         }

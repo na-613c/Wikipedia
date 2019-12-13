@@ -2,7 +2,6 @@ package com.example.wikipedia.Firebase;
 
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -28,14 +27,10 @@ public class FireBase {
 
     private List<SearchWord> value = new ArrayList<>();
 
-    public List<SearchWord> getValue() {
-        return value;
-    }
-
     public void read(final DataAdapter adapter) {
 
-        // Read from the database
         myRef.addChildEventListener(new ChildEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
@@ -43,18 +38,16 @@ public class FireBase {
                 if (searchWordFromDb != null) {
                     searchWordFromDb.setKey(dataSnapshot.getKey());
 
-                    oldWord = searchWordFromDb.getWord();
-
                     value.add(0, searchWordFromDb);
-                    adapter.updateItems();
-
+                    updateOldWord();
+                    adapter.updateItems(value);
                 }
+
 
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
-                Log.d("_FB__", "изменение ");
             }
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -63,32 +56,25 @@ public class FireBase {
                 searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
 
                 if (searchWordFromDb != null) {
-
                     searchWordFromDb.setKey(dataSnapshot.getKey());
-
-                    Log.d("_FB__", "удаление " + searchWordFromDb.getWord());
 
                     for (int i = 0; i < value.size(); i++) {
                         if (value.get(i).getKey().equals(searchWordFromDb.getKey())) {
-                            Log.d("_FB__", "Совпало " + value.get(i).getWord());
-
                             value.remove(i);
-
                         }
                     }
-                    adapter.deleteItems(value);
 
+                    updateOldWord();
+                    adapter.deleteItems(value);
                 }
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("_FB__", "изменение приоритета");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("_FB__", "ошибка на сервере");
             }
         });
 
@@ -100,11 +86,14 @@ public class FireBase {
     }
 
     public void write(SearchWord wordForDB) {
-
-        if (!(wordForDB.getWord().equals("")) ) {
-            myRef.push().setValue(wordForDB);
-        }
-
+        myRef.push().setValue(wordForDB);
     }
 
+    private void updateOldWord() {
+        if (value.size() != 0) {
+            oldWord = value.get(0).getWord();
+        } else {
+            oldWord = "";
+        }
+    }
 }
