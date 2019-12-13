@@ -4,7 +4,6 @@ package com.example.wikipedia.Domain;
 public class SearchWord {
 
     private String word;
-
     private String key;
 
     public String getWord() {

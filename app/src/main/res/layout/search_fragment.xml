@@ -23,7 +23,8 @@
             android:layout_marginTop="20dp"
             android:freezesText="true"
             android:text="@string/app_name"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
@@ -36,18 +37,19 @@
             android:hint="@string/input_word"
             app:boxStrokeColor="#000000"
             app:boxStrokeErrorColor="#E00B0B"
+            app:boxStrokeWidth="2dp"
             app:endIconTint="#111111"
             app:errorTextColor="#E00B0B"
             app:hintTextColor="#020202"
-            app:startIconTint="#000000"
-            >
+            app:startIconTint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,13 +62,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:drawableLeft="@android:drawable/ic_menu_search"
+            android:paddingHorizontal="40dp"
             android:text="@string/search"
             android:textColor="#000"
-            app:strokeColor="#BA000000"
             android:textSize="23sp"
-            app:strokeWidth="1dp"
-            app:cornerRadius="2dp"
-            android:paddingHorizontal="40dp"/>
+            app:strokeColor="#BA000000" />
 
 
     </LinearLayout>

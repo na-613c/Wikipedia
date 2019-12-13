@@ -4,7 +4,6 @@ package com.example.wikipedia.Domain;
 public class RequestInformation {
 
     private String title = "";
-
     private String extract = "";
 
     public String getTitle() {

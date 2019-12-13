@@ -14,13 +14,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
+import static com.example.wikipedia.ui.SearchFragment.oldWord;
 
 public class FireBase {
 
@@ -44,10 +43,11 @@ public class FireBase {
                 if (searchWordFromDb != null) {
                     searchWordFromDb.setKey(dataSnapshot.getKey());
 
-                    value.add(0, searchWordFromDb);
+                    oldWord = searchWordFromDb.getWord();
 
+                    value.add(0, searchWordFromDb);
                     adapter.updateItems();
-                    Log.d("_FB__", "добавление \n");
+
                 }
 
             }
@@ -96,25 +96,12 @@ public class FireBase {
     }
 
     public void delete(final String key) {
-
-        /** *********************** Удаление из бд по названию searchWord ************************/
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                myRef.child(key).removeValue();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled", databaseError.toException());
-            }
-        });
-
+        myRef.child(key).removeValue();
     }
 
     public void write(SearchWord wordForDB) {
 
-        if (!(wordForDB.getWord().equals(""))) {
+        if (!(wordForDB.getWord().equals("")) ) {
             myRef.push().setValue(wordForDB);
         }
 

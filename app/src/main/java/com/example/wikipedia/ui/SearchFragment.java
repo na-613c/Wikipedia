@@ -23,6 +23,8 @@ import com.google.android.material.textfield.TextInputLayout;
 public class SearchFragment extends Fragment {
 
     private Button button;
+    public static String oldWord = "";
+    private String searchStr;
 
     private static TextInputLayout mTextInputLayout;
     private EditText mEditText;
@@ -67,23 +69,23 @@ public class SearchFragment extends Fragment {
 
     private void startQuery() {
         /************* Launcher *************/
-
-        String searchStr = mEditText.getText().toString().trim();
-
+        searchStr = mEditText.getText().toString().trim();
 
         AddSearchWord addSearchWord = new AddSearchWord();
         addSearchWord.addWord(searchStr);
 
         searchWord = Launcher.searchWord;
-        // Write a message to the database
-        fireBase = new FireBase();
-        fireBase.write(searchWord);
+
+        if (!searchStr.equals(oldWord)) {
+            // Write a message to the database
+            fireBase = new FireBase();
+            fireBase.write(searchWord);
+        }
 
     }
 
-    public static void showError() {
-        mTextInputLayout.setError("Проверьте интернет соеденение!");
-
+    public static void showError(String message) {
+        mTextInputLayout.setError(message);
     }
 
     public static void hideError() {

@@ -1,9 +1,5 @@
 package com.example.wikipedia.RecyclerView;
 
-/****************************************
- *      created by Shavlovskii Ivan     *
- *               23.11.2019             *
- ***************************************/
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -84,7 +84,7 @@ public class WikipediaQuery {
                 if (t.toString().equals(err)) {
                     queryApi(searchTermForQuery);
 
-                     SearchFragment.showError();
+                     SearchFragment.showError("Проверьте интернет соеденение!");
 
                 }
             }
@@ -118,8 +118,8 @@ public class WikipediaQuery {
             title = parseJSON(strPagesIds, "title");
 
             if (searchWord.getWord().equals("")) {
-                requestInformation.setTitle("Ошибка!");
-                requestInformation.setExtract("Напишите искомое слово");
+                SearchFragment.showError("Напишите искомое слово!");
+                requestInformation.setTitle("𝐖𝐢𝐤𝐢𝐩𝐞𝐝𝐢𝐚");
             } else {
                 requestInformation.setTitle("Ошибка!");
                 requestInformation.setExtract("Страница «" + searchWord.getWord() + "» не найдена");
@@ -144,10 +144,7 @@ public class WikipediaQuery {
                 }
             }
         }
-
         writeInSearchFragment(requestInformation.getTitle(), requestInformation.getExtract());
-
-
     }
 
     private String parseJSON(String str, String key) {
