@@ -34,10 +34,9 @@ public class HistoryFragment extends Fragment {
         emptyHistory = (TextView) v.findViewById(R.id.emptyHistory);
         recyclerView = (RecyclerView) v.findViewById(R.id.list);
 
-        /******************** создаем адаптер *******************/
-        adapter = new DataAdapter(inflater.getContext());
-        /**************** устанавливаем для списка адаптер **************/
-        recyclerView.setAdapter(adapter);
+        adapter = new DataAdapter(inflater.getContext());//создаем адаптер
+        recyclerView.setAdapter(adapter);//устанавливаем для списка адаптер
+
         fireBase.read(adapter);
 
         return v;

@@ -66,7 +66,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void startQuery() {
-        /************* Launcher *************/
         searchStr = mEditText.getText().toString().trim();
 
         searchWord.setWord(searchStr);
@@ -78,7 +77,6 @@ public class SearchFragment extends Fragment {
             fireBase = new FireBase();
             fireBase.write(searchWord);
         }
-
     }
 
     public static void showError(String message) {

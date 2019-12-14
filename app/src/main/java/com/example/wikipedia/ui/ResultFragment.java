@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.wikipedia.R;
 
-
 public class ResultFragment extends Fragment {
 
     public static TextView textView;

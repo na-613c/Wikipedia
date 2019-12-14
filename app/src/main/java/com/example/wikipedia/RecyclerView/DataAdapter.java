@@ -38,13 +38,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void deleteItems(List<SearchWord> listAfterDelete) {
-        history = listAfterDelete;
-        checkIfEmpty(history);
-        notifyDataSetChanged();
-    }
-
-
     @NonNull
     @Override
     public DataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,7 +49,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final DataAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final DataAdapter.ViewHolder holder, int position) {
 
         final SearchWord searchWord = history.get(position);
 

@@ -1,10 +1,7 @@
 package com.example.wikipedia.Firebase;
 
 
-import android.os.Build;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import com.example.wikipedia.Domain.SearchWord;
 import com.example.wikipedia.RecyclerView.DataAdapter;
@@ -30,7 +27,6 @@ public class FireBase {
     public void read(final DataAdapter adapter) {
 
         myRef.addChildEventListener(new ChildEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
@@ -43,14 +39,12 @@ public class FireBase {
                     adapter.updateItems(value);
                 }
 
-
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
@@ -65,7 +59,7 @@ public class FireBase {
                     }
 
                     updateOldWord();
-                    adapter.deleteItems(value);
+                    adapter.updateItems(value);
                 }
             }
 
@@ -77,8 +71,6 @@ public class FireBase {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-
     }
 
     public void delete(final String key) {

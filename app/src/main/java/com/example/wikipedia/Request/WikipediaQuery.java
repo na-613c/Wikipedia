@@ -2,7 +2,6 @@ package com.example.wikipedia.Request;
 
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.example.wikipedia.Domain.RequestInformation;
 import com.example.wikipedia.ui.SearchFragment;
@@ -35,13 +34,7 @@ public class WikipediaQuery {
     private Call<String> call;
 
 
-
-
-
     public void queryApi(final String searchTermForQuery) {
-        /************* Launcher *************/
-
-        /************* Launcher *************/
 
         requestInformation = new RequestInformation();
 
@@ -66,7 +59,6 @@ public class WikipediaQuery {
 
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("Responsestring", response.body());
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
@@ -74,7 +66,6 @@ public class WikipediaQuery {
                         SearchFragment.hideError();
 
                         String jsonresponse = response.body();
-
                         searchInJSON(jsonresponse);
 
                     }
@@ -122,8 +113,6 @@ public class WikipediaQuery {
             writeInRequestInformation(title, extract);
 
             if (requestInformation.getExtract().equals("")) {//Если пустой extract
-                Log.d("____2", "requestInformation.getExtract().equals(\"\")");
-                /******************************  запускаем 1 раз  ***************************/
 
                 if (searchWord.getWord().equals("")) {// если пустое слово
                     SearchFragment.showError("Напишите искомое слово!");
