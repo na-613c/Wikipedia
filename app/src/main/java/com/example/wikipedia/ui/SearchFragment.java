@@ -66,7 +66,15 @@ public class SearchFragment extends Fragment {
     }
 
     private void startQuery() {
-        searchStr = mEditText.getText().toString().trim();
+        searchStr = mEditText.getText().toString().trim().toLowerCase();
+
+        String[] words = searchStr.split(" ");//разделяем на массив из слов
+        searchStr = "";
+        for (String word : words) {
+            String first = word.substring(0, 1).toUpperCase();
+            String all = word.substring(1);
+            searchStr += first + all + " ";
+        }
 
         searchWord.setWord(searchStr);
 
