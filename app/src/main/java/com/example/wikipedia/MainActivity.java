@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
 
     public static SearchWord searchWord;
+    public static ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
         searchWord = new SearchWord();
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        viewPager.setOffscreenPageLimit(2);
+        viewPager = findViewById(R.id.view_pager);
+
+        viewPager.setOffscreenPageLimit(2);//количество страниц, которые должны быть сохранены по обе стороны от текущей страницы
 
         viewPager.setAdapter(sectionsPagerAdapter);
 

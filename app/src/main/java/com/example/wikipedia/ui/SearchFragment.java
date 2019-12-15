@@ -1,6 +1,5 @@
 package com.example.wikipedia.ui;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,7 +32,6 @@ public class SearchFragment extends Fragment {
     private FireBase fireBase;
 
 
-    @SuppressLint("ShowToast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,14 +64,12 @@ public class SearchFragment extends Fragment {
     }
 
     private void startQuery() {
-        searchStr = mEditText.getText().toString().trim().toLowerCase();
+        searchStr = mEditText.getText().toString().trim();
 
-        String[] words = searchStr.split(" ");//разделяем на массив из слов
-        searchStr = "";
-        for (String word : words) {
-            String first = word.substring(0, 1).toUpperCase();
-            String all = word.substring(1);
-            searchStr += first + all + " ";
+        if (!searchStr.equals("")) {
+            String first = searchStr.substring(0, 1).toUpperCase();
+            String all = searchStr.substring(1);
+            searchStr = first + all;
         }
 
         searchWord.setWord(searchStr);

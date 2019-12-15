@@ -17,6 +17,9 @@ import com.example.wikipedia.RecyclerView.DataAdapter;
 
 import java.util.List;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class HistoryFragment extends Fragment {
 
     private static RecyclerView recyclerView;
@@ -45,11 +48,11 @@ public class HistoryFragment extends Fragment {
     public static void checkIfEmpty(List<SearchWord> history) {
 
         if (history.size() == 0) {
-            recyclerView.setVisibility(View.INVISIBLE);
-            emptyHistory.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(INVISIBLE);
+            emptyHistory.setVisibility(VISIBLE);
         } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            emptyHistory.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(VISIBLE);
+            emptyHistory.setVisibility(INVISIBLE);
         }
     }
 }

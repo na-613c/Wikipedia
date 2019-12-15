@@ -4,6 +4,7 @@ package com.example.wikipedia.Request;
 import android.annotation.SuppressLint;
 
 import com.example.wikipedia.Domain.RequestInformation;
+import com.example.wikipedia.MainActivity;
 import com.example.wikipedia.ui.SearchFragment;
 
 import org.json.JSONException;
@@ -55,7 +56,7 @@ public class WikipediaQuery {
 
         call = apiInterface.getPostWithInfo(url);
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<String>() { //enqueue() для асинхронного вызова
 
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -122,6 +123,8 @@ public class WikipediaQuery {
                     queryApi(searchWord.getWord() + "_(значения)");
                 }
 
+            } else {
+                MainActivity.viewPager.setCurrentItem(1);
             }
         }
         writeInSearchFragment(requestInformation.getTitle(), requestInformation.getExtract());

@@ -43,7 +43,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public DataAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.list_item, parent, false);
-
         checkIfEmpty(history);
         return new ViewHolder(view);
     }
@@ -57,7 +56,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 fireBase = new FireBase();
                 fireBase.delete(searchWord.getKey());// удаляем из БД
 
@@ -66,7 +64,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
         holder.item.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 String searchWordStr = holder.word.getText().toString();
 
                 WikipediaQuery wikipediaQuery = new WikipediaQuery();
@@ -79,13 +76,11 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-
         try {
             return history.size();
         } catch (Exception e) {
             return 0;
         }
-
     }
 
 
@@ -97,6 +92,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
         ViewHolder(View view) {
             super(view);
+
             word = (TextView) view.findViewById(R.id.word);
             btn_del = (ImageButton) view.findViewById(R.id.btn_del);
             item = (LinearLayout) view.findViewById(R.id.item);
