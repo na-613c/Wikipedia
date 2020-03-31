@@ -1,4 +1,4 @@
-package com.example.wikipedia.Request;
+package com.example.wikipedia.Models;
 
 
 import retrofit2.Call;

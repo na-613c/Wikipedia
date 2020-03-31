@@ -1,10 +1,9 @@
-package com.example.wikipedia.Firebase;
-
+package com.example.wikipedia.Controllers;
 
 import androidx.annotation.NonNull;
 
-import com.example.wikipedia.Domain.SearchWord;
-import com.example.wikipedia.RecyclerView.DataAdapter;
+import com.example.wikipedia.Controllers.RecyclerView.DataAdapter;
+import com.example.wikipedia.Models.SearchWordModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,19 +16,18 @@ import java.util.List;
 
 import static com.example.wikipedia.ui.SearchFragment.oldWord;
 
-public class FireBase {
-
-    private SearchWord searchWordFromDb;
+public class FireBaseController {
+    private SearchWordModel searchWordFromDb;
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
-    private List<SearchWord> value = new ArrayList<>();
+    private List<SearchWordModel> value = new ArrayList<>();
 
     public void read(final DataAdapter adapter) {
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
+                searchWordFromDb = dataSnapshot.getValue(SearchWordModel.class);
 
                 if (searchWordFromDb != null) {
                     searchWordFromDb.setKey(dataSnapshot.getKey());
@@ -47,7 +45,7 @@ public class FireBase {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                searchWordFromDb = dataSnapshot.getValue(SearchWord.class);
+                searchWordFromDb = dataSnapshot.getValue(SearchWordModel.class);
 
                 if (searchWordFromDb != null) {
                     searchWordFromDb.setKey(dataSnapshot.getKey());
@@ -77,7 +75,7 @@ public class FireBase {
         myRef.child(key).removeValue();
     }
 
-    public void write(SearchWord wordForDB) {
+    public void write(SearchWordModel wordForDB) {
         myRef.push().setValue(wordForDB);
     }
 

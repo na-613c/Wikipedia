@@ -1,8 +1,6 @@
-package com.example.wikipedia.Domain;
+package com.example.wikipedia.Models;
 
-
-public class SearchWord {
-
+public class SearchWordModel {
     private String word;
     private String key;
 

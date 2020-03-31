@@ -1,4 +1,4 @@
-package com.example.wikipedia.RecyclerView;
+package com.example.wikipedia.Controllers.RecyclerView;
 
 
 import android.content.Context;
@@ -12,10 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Domain.SearchWord;
-import com.example.wikipedia.Firebase.FireBase;
+import com.example.wikipedia.Controllers.FireBaseController;
+import com.example.wikipedia.Controllers.QueryController;
+import com.example.wikipedia.Models.SearchWordModel;
 import com.example.wikipedia.R;
-import com.example.wikipedia.Request.WikipediaQuery;
 
 import java.util.List;
 
@@ -25,14 +25,14 @@ import static com.example.wikipedia.ui.HistoryFragment.checkIfEmpty;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private List<SearchWord> history;
-    private FireBase fireBase;
+    private List<SearchWordModel> history;
+    private FireBaseController fireBaseController;
 
     public DataAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
 
-    public void updateItems(List<SearchWord> list) {
+    public void updateItems(List<SearchWordModel> list) {
         history = list;
         checkIfEmpty(history);
         notifyDataSetChanged();
@@ -50,14 +50,14 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final DataAdapter.ViewHolder holder, int position) {
 
-        final SearchWord searchWord = history.get(position);
+        final SearchWordModel searchWordModel = history.get(position);
 
-        holder.word.setText(searchWord.getWord());
+        holder.word.setText(searchWordModel.getWord());
 
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                fireBase = new FireBase();
-                fireBase.delete(searchWord.getKey());// удаляем из БД
+                fireBaseController = new FireBaseController();
+                fireBaseController.delete(searchWordModel.getKey());// удаляем из БД
 
             }
         });
@@ -66,8 +66,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             public void onClick(View v) {
                 String searchWordStr = holder.word.getText().toString();
 
-                WikipediaQuery wikipediaQuery = new WikipediaQuery();
-                wikipediaQuery.queryApi(searchWordStr);
+                QueryController queryController = new QueryController();
+                queryController.queryApi(searchWordStr);
             }
         });
 

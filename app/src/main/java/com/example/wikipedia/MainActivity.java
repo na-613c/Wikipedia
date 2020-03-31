@@ -6,13 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 
-import com.example.wikipedia.Domain.SearchWord;
+import com.example.wikipedia.Models.InformationModel;
+import com.example.wikipedia.Models.SearchWordModel;
 import com.example.wikipedia.ui.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static SearchWord searchWord;
+    public static SearchWordModel searchWordModel;
+    public static InformationModel informationModel;
     public static ViewPager viewPager;
 
     @Override
@@ -21,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        searchWord = new SearchWord();
+        searchWordModel = new SearchWordModel();
+        informationModel = new InformationModel();
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 

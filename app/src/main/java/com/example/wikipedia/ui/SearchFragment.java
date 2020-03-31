@@ -12,12 +12,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.wikipedia.Firebase.FireBase;
+import com.example.wikipedia.Controllers.ProxyController;
 import com.example.wikipedia.R;
-import com.example.wikipedia.Request.WikipediaQuery;
 import com.google.android.material.textfield.TextInputLayout;
-
-import static com.example.wikipedia.MainActivity.searchWord;
 
 public class SearchFragment extends Fragment {
 
@@ -29,7 +26,6 @@ public class SearchFragment extends Fragment {
     private EditText mEditText;
 
 
-    private FireBase fireBase;
 
 
     @Override
@@ -66,21 +62,9 @@ public class SearchFragment extends Fragment {
     private void startQuery() {
         searchStr = mEditText.getText().toString().trim();
 
-        if (!searchStr.equals("")) {
-            String first = searchStr.substring(0, 1).toUpperCase();
-            String all = searchStr.substring(1);
-            searchStr = first + all;
-        }
-
-        searchWord.setWord(searchStr);
-
-        WikipediaQuery wikipediaQuery = new WikipediaQuery();
-        wikipediaQuery.queryApi(searchStr);
-
-        if (!searchStr.equals(oldWord) & !(searchStr.equals(""))) {
-            fireBase = new FireBase();
-            fireBase.write(searchWord);
-        }
+        ProxyController proxyController = new ProxyController();
+        proxyController.preparation(searchStr);
+        
     }
 
     public static void showError(String message) {

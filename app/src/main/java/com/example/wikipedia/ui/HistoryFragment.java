@@ -10,10 +10,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Domain.SearchWord;
-import com.example.wikipedia.Firebase.FireBase;
+import com.example.wikipedia.Controllers.FireBaseController;
+import com.example.wikipedia.Models.SearchWordModel;
 import com.example.wikipedia.R;
-import com.example.wikipedia.RecyclerView.DataAdapter;
+import com.example.wikipedia.Controllers.RecyclerView.DataAdapter;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class HistoryFragment extends Fragment {
 
     private static RecyclerView recyclerView;
     private static TextView emptyHistory;
-    private FireBase fireBase = new FireBase();
+    private FireBaseController fireBase = new FireBaseController();
     private DataAdapter adapter;
 
 
@@ -45,7 +45,7 @@ public class HistoryFragment extends Fragment {
         return v;
     }
 
-    public static void checkIfEmpty(List<SearchWord> history) {
+    public static void checkIfEmpty(List<SearchWordModel> history) {
 
         if (history.size() == 0) {
             recyclerView.setVisibility(INVISIBLE);
