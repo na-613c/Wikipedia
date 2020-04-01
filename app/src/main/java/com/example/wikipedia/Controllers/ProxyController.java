@@ -1,27 +1,46 @@
 package com.example.wikipedia.Controllers;
 
-import static com.example.wikipedia.MainActivity.searchWordModel;
+import com.example.wikipedia.Models.SearchPageModel;
+
+import static com.example.wikipedia.ui.SearchFragment.hideError;
 import static com.example.wikipedia.ui.SearchFragment.oldWord;
+import static com.example.wikipedia.ui.SearchFragment.showError;
 
 public class ProxyController {
 
     private FireBaseController fireBaseController;
+    private String url;
+    private String startUrl = "w/api.php?action=query&format=json&utf8&";
 
-    public void preparation(String inputWord){
-        if (!inputWord.equals("")) {
-            String first = inputWord.substring(0, 1).toUpperCase();
-            String all = inputWord.substring(1);
-            inputWord = first + all;
+    public void preparation(SearchPageModel inputData, String type) {
+
+        switch (type) {
+            case "search":
+                url = startUrl + "list=search&srsearch=" + inputData.getTitle();
+                break;
+            case "page":
+                url = startUrl + "prop=extracts&explaintext&indexpageids=1&pageids=" + inputData.getId();
+                writeInDB(inputData);
+                break;
+            default:
+                break;
         }
 
-        searchWordModel.setWord(inputWord);
+        if (!inputData.getTitle().equals("")) {
 
-        QueryController queryController = new QueryController();
-        queryController.queryApi(inputWord);
+            QueryController queryController = new QueryController();
+            queryController.queryApi(url, type);
+            hideError();
+        } else showError("Введите слово!");
 
-        if (!inputWord.equals(oldWord) & !(inputWord.equals(""))) {
+    }
+
+    private void writeInDB(SearchPageModel inputData) {
+
+        if (!inputData.getTitle().equals(oldWord) & !(inputData.getTitle().equals(""))) {
+            oldWord = inputData.getTitle();
             fireBaseController = new FireBaseController();
-            fireBaseController.write(searchWordModel);
+            fireBaseController.write(inputData);
         }
     }
 }

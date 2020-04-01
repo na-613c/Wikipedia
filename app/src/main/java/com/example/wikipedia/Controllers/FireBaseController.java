@@ -2,8 +2,8 @@ package com.example.wikipedia.Controllers;
 
 import androidx.annotation.NonNull;
 
-import com.example.wikipedia.Controllers.RecyclerView.DataAdapter;
-import com.example.wikipedia.Models.SearchWordModel;
+import com.example.wikipedia.Controllers.RecyclerView.HistoryAdapter;
+import com.example.wikipedia.Models.SearchPageModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,23 +17,21 @@ import java.util.List;
 import static com.example.wikipedia.ui.SearchFragment.oldWord;
 
 public class FireBaseController {
-    private SearchWordModel searchWordFromDb;
+    private SearchPageModel searchWordFromDb;
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
-    private List<SearchWordModel> value = new ArrayList<>();
+    private List<SearchPageModel> value = new ArrayList<>();
 
-    public void read(final DataAdapter adapter) {
+    public void read(final HistoryAdapter adapter) {
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                searchWordFromDb = dataSnapshot.getValue(SearchWordModel.class);
+                searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
 
                 if (searchWordFromDb != null) {
-                    searchWordFromDb.setKey(dataSnapshot.getKey());
 
                     value.add(0, searchWordFromDb);
-                    updateOldWord();
                     adapter.updateItems(value);
                 }
 
@@ -45,20 +43,20 @@ public class FireBaseController {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                searchWordFromDb = dataSnapshot.getValue(SearchWordModel.class);
-
-                if (searchWordFromDb != null) {
-                    searchWordFromDb.setKey(dataSnapshot.getKey());
-
-                    for (int i = 0; i < value.size(); i++) {
-                        if (value.get(i).getKey().equals(searchWordFromDb.getKey())) {
-                            value.remove(i);
-                        }
-                    }
-
-                    updateOldWord();
-                    adapter.updateItems(value);
-                }
+//                searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
+//
+//                if (searchWordFromDb != null) {
+//                    searchWordFromDb.setKey(dataSnapshot.getKey());
+//
+//                    for (int i = 0; i < value.size(); i++) {
+//                        if (value.get(i).getKey().equals(searchWordFromDb.getKey())) {
+//                            value.remove(i);
+//                        }
+//                    }
+//
+//                    updateOldWord();
+//                    adapter.updateItems(value);
+//                }
             }
 
             @Override
@@ -71,19 +69,12 @@ public class FireBaseController {
         });
     }
 
-    public void delete(final String key) {
-        myRef.child(key).removeValue();
-    }
+//    public void delete(final String key) {
+//        myRef.removeValue();
+//    }
 
-    public void write(SearchWordModel wordForDB) {
+    public void write(SearchPageModel wordForDB) {
         myRef.push().setValue(wordForDB);
     }
 
-    private void updateOldWord() {
-        if (value.size() != 0) {
-            oldWord = value.get(0).getWord();
-        } else {
-            oldWord = "";
-        }
-    }
 }

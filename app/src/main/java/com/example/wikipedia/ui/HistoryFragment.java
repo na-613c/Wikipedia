@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikipedia.Controllers.FireBaseController;
-import com.example.wikipedia.Models.SearchWordModel;
+import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
-import com.example.wikipedia.Controllers.RecyclerView.DataAdapter;
+import com.example.wikipedia.Controllers.RecyclerView.HistoryAdapter;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class HistoryFragment extends Fragment {
     private static RecyclerView recyclerView;
     private static TextView emptyHistory;
     private FireBaseController fireBase = new FireBaseController();
-    private DataAdapter adapter;
+    private HistoryAdapter adapter;
 
 
     @Override
@@ -37,7 +37,7 @@ public class HistoryFragment extends Fragment {
         emptyHistory = (TextView) v.findViewById(R.id.emptyHistory);
         recyclerView = (RecyclerView) v.findViewById(R.id.list);
 
-        adapter = new DataAdapter(inflater.getContext());//создаем адаптер
+        adapter = new HistoryAdapter(inflater.getContext());//создаем адаптер
         recyclerView.setAdapter(adapter);//устанавливаем для списка адаптер
 
         fireBase.read(adapter);
@@ -45,7 +45,7 @@ public class HistoryFragment extends Fragment {
         return v;
     }
 
-    public static void checkIfEmpty(List<SearchWordModel> history) {
+    public static void checkIfEmpty(List<SearchPageModel> history) {
 
         if (history.size() == 0) {
             recyclerView.setVisibility(INVISIBLE);

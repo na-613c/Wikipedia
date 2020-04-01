@@ -1,6 +1,7 @@
 package com.example.wikipedia.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.wikipedia.Controllers.ProxyController;
+import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -21,11 +23,8 @@ public class SearchFragment extends Fragment {
     private Button button;
     public static String oldWord = "";
     private String searchStr;
-
     private static TextInputLayout mTextInputLayout;
     private EditText mEditText;
-
-
 
 
     @Override
@@ -63,7 +62,9 @@ public class SearchFragment extends Fragment {
         searchStr = mEditText.getText().toString().trim();
 
         ProxyController proxyController = new ProxyController();
-        proxyController.preparation(searchStr);
+        SearchPageModel searchPageModel = new SearchPageModel();
+        searchPageModel.setTitle(searchStr);
+        proxyController.preparation(searchPageModel, "search");
         
     }
 

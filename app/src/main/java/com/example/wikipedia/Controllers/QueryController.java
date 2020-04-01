@@ -1,12 +1,11 @@
 package com.example.wikipedia.Controllers;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.wikipedia.Models.ApiInterface;
-import com.example.wikipedia.Models.InformationModel;
 import com.example.wikipedia.ui.SearchFragment;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,25 +13,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-import static com.example.wikipedia.MainActivity.searchWordModel;
-
 public class QueryController {
 
     private Boolean isFirstRequest = true;
 
-    private String url;
     private String err = "java.net.UnknownHostException: Unable to resolve host \"ru.wikipedia.org\": No address associated with hostname";
 
     private Call<String> call;
 
 
 
-    public void queryApi(final String searchTermForQuery) {
+    public void queryApi(String url, String type) {
 
-
-        if (isFirstRequest) {
-            searchWordModel.setWord(searchTermForQuery);
-        }
 
         Retrofit retrofit;
 
@@ -41,7 +33,7 @@ public class QueryController {
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
 
-        url = "w/api.php?format=json&utf8&action=query&prop=extracts&explaintext&indexpageids=1&titles=" + searchTermForQuery;
+
 
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -58,8 +50,11 @@ public class QueryController {
                         SearchFragment.hideError();
 
                         String jsonresponse = response.body();
-                        ParseInformationController parseInformationController = new ParseInformationController();
-                        parseInformationController.searchInJSON(jsonresponse);
+
+                        Log.d("__jsonresponse__",jsonresponse);
+
+                        ParseController parseController = new ParseController();
+                        parseController.searchInJSON(jsonresponse,type);
 
                     }
                 }
@@ -69,7 +64,7 @@ public class QueryController {
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
 
                 if (t.toString().equals(err)) {
-                    queryApi(searchTermForQuery);
+                    queryApi(url, type);
 
                     SearchFragment.showError("Проверьте интернет соеденение!");
                 }

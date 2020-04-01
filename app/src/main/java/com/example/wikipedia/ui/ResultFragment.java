@@ -7,27 +7,55 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wikipedia.Controllers.RecyclerView.ResultsAdapter;
+import com.example.wikipedia.MainActivity;
+import com.example.wikipedia.Models.ResultsModel;
+import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
+
+import java.util.List;
+
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+import static com.example.wikipedia.Controllers.ParseController.searchingResults;
+
 
 public class ResultFragment extends Fragment {
 
-    public static TextView textView;
-    public static TextView mainText;
+    private static ResultsAdapter adapter;
+    private static RecyclerView recyclerView;
+    private static TextView emptyResult;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.result_fragment, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.list);
+        adapter = new ResultsAdapter(inflater.getContext(),searchingResults);//создаем адаптер
+        emptyResult = (TextView) v.findViewById(R.id.emptyResults);
+        updateRecyclerView();
 
-        textView = (TextView) v.findViewById(R.id.textView);
-        mainText = (TextView) v.findViewById(R.id.main_text);
-
+//        Picasso.with(inflater.getContext())
+//                .load("https://commons.wikimedia.org/wiki/File:Cat_poster_1.jpg")
+//                .into(imageView);
         return v;
     }
 
-    public static void writeInSearchFragment(String title, String content) {
-        mainText.setText(title);
-        textView.setText(content);
+    public static void checkIfEmpty(List<ResultsModel> results) {
+
+        if (results.size() == 0) {
+            recyclerView.setVisibility(INVISIBLE);
+            emptyResult.setVisibility(VISIBLE);
+        } else {
+            recyclerView.setVisibility(VISIBLE);
+            emptyResult.setVisibility(INVISIBLE);
+        }
     }
+
+    public static void updateRecyclerView(){
+        recyclerView.setAdapter(adapter);//устанавливаем для списка адаптер
+    }
+
 }
