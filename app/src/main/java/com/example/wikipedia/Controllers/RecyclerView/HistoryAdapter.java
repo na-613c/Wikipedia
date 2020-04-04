@@ -11,37 +11,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Controllers.FireBaseController;
 import com.example.wikipedia.Controllers.ProxyController;
 import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
 
-import java.util.List;
-
+import static com.example.wikipedia.MainActivity.history;
 import static com.example.wikipedia.ui.HistoryFragment.checkIfEmpty;
 
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private List<SearchPageModel> history;
 
     public HistoryAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
 
-    public void updateItems(List<SearchPageModel> list) {
-        history = list;
-        checkIfEmpty(history);
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = inflater.inflate(R.layout.list_item, parent, false);
-        checkIfEmpty(history);
+        checkIfEmpty();
         return new ViewHolder(view);
     }
 
@@ -73,8 +63,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-
+    static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView word;
         final LinearLayout item;
 

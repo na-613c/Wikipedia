@@ -1,6 +1,7 @@
 package com.example.wikipedia.ui;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,22 +11,21 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Controllers.FireBaseController;
-import com.example.wikipedia.Models.SearchPageModel;
-import com.example.wikipedia.R;
 import com.example.wikipedia.Controllers.RecyclerView.HistoryAdapter;
-
-import java.util.List;
+import com.example.wikipedia.R;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static com.example.wikipedia.MainActivity.fireBaseController;
+import static com.example.wikipedia.MainActivity.history;
+
 
 public class HistoryFragment extends Fragment {
 
     private static RecyclerView recyclerView;
+    @SuppressLint("StaticFieldLeak")
     private static TextView emptyHistory;
-    private FireBaseController fireBase = new FireBaseController();
-    private HistoryAdapter adapter;
+    private static HistoryAdapter adapter;
 
 
     @Override
@@ -38,15 +38,17 @@ public class HistoryFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.list);
 
         adapter = new HistoryAdapter(inflater.getContext());//создаем адаптер
-        recyclerView.setAdapter(adapter);//устанавливаем для списка адаптер
+        setAdapterHistoryRV();
 
-        fireBase.read(adapter);
-
+        fireBaseController.read();
         return v;
     }
 
-    public static void checkIfEmpty(List<SearchPageModel> history) {
+    public static void setAdapterHistoryRV() {
+        recyclerView.setAdapter(adapter);//устанавливаем для списка адаптер
+    }
 
+    public static void checkIfEmpty() {
         if (history.size() == 0) {
             recyclerView.setVisibility(INVISIBLE);
             emptyHistory.setVisibility(VISIBLE);

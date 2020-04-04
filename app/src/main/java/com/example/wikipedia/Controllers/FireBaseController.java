@@ -1,8 +1,9 @@
 package com.example.wikipedia.Controllers;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
-import com.example.wikipedia.Controllers.RecyclerView.HistoryAdapter;
 import com.example.wikipedia.Models.SearchPageModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -11,28 +12,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.example.wikipedia.ui.SearchFragment.oldWord;
+import static com.example.wikipedia.MainActivity.history;
+import static com.example.wikipedia.ui.HistoryFragment.setAdapterHistoryRV;
 
 public class FireBaseController {
-    private SearchPageModel searchWordFromDb;
+
     private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
-    private List<SearchPageModel> value = new ArrayList<>();
-
-    public void read(final HistoryAdapter adapter) {
+    public void read() {
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
+                SearchPageModel searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
 
+                Log.d("___", searchWordFromDb.getTitle());
                 if (searchWordFromDb != null) {
-
-                    value.add(0, searchWordFromDb);
-                    adapter.updateItems(value);
+                    history.add(0, searchWordFromDb);
+                    Log.d("___test_", history.size() + "");
+                    setAdapterHistoryRV();
                 }
 
             }
@@ -43,6 +42,7 @@ public class FireBaseController {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                /******************************* обновление при удалении из БД ***************************/
 //                searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
 //
 //                if (searchWordFromDb != null) {
@@ -69,6 +69,7 @@ public class FireBaseController {
         });
     }
 
+    /*********************** очищение БД ***********************/
 //    public void delete(final String key) {
 //        myRef.removeValue();
 //    }

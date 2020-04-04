@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:gravity="center"
-        android:text="Начните поиск"
+        android:text="Нет избранных записей"
         android:textColor="#070707"
         android:textSize="40sp" />
 

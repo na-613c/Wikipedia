@@ -13,32 +13,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class QueryController {
-
-    private Boolean isFirstRequest = true;
+class QueryController {
 
     private String err = "java.net.UnknownHostException: Unable to resolve host \"ru.wikipedia.org\": No address associated with hostname";
-
     private Call<String> call;
 
+    void queryApi(String url, String type) {
 
-
-    public void queryApi(String url, String type) {
-
-
-        Retrofit retrofit;
-
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ru.wikipedia.org/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
 
-
-
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         call = apiInterface.getPostWithInfo(url);
-
         call.enqueue(new Callback<String>() { //enqueue() для асинхронного вызова
 
             @Override
@@ -46,31 +35,25 @@ public class QueryController {
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-
-                        SearchFragment.hideError();
-
                         String jsonresponse = response.body();
 
-                        Log.d("__jsonresponse__",jsonresponse);
+                        SearchFragment.hideError();
+                        Log.d("__jsonresponse__", jsonresponse);
 
                         ParseController parseController = new ParseController();
-                        parseController.searchInJSON(jsonresponse,type);
-
+                        parseController.searchInJSON(jsonresponse, type);
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-
                 if (t.toString().equals(err)) {
                     queryApi(url, type);
-
                     SearchFragment.showError("Проверьте интернет соеденение!");
                 }
             }
         });
-
 
     }
 

@@ -14,20 +14,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.wikipedia.ui.ResultFragment.updateRecyclerView;
+import static com.example.wikipedia.ui.ResultFragment.setAdapterResultRV;
 import static com.example.wikipedia.ui.SearchFragment.showError;
 
 public class ParseController {
     private JSONObject obj;
     public static List<ResultsModel> searchingResults = new ArrayList<>();
     private List<String> finalData = new ArrayList<>();
-    private String title;
-    private String extract;
     private String resultStr;
 
     @SuppressLint("SetTextI18n")
-    public void searchInJSON(String response, String type) {
-
+    void searchInJSON(String response, String type) {
         searchingResults.clear();
 
         switch (type) {
@@ -51,14 +48,14 @@ public class ParseController {
 
         String strPagesIds = parseJSON(strPages, pageids);//получаем данные с страницы c id = pageids
 
-        title = parseJSON(strPagesIds, "title");
-        extract = parseJSON(strPagesIds, "extract");
+        String title = parseJSON(strPagesIds, "title");
+        String extract = parseJSON(strPagesIds, "extract");
 
         listParsing(extract);
 
         if (finalData.size() % 2 == 0) finalData.add("");
 
-        ResultsModel startResultsModel = new ResultsModel("\n" + title.toUpperCase() + "\n", Integer.parseInt(pageids), finalData.get(0));
+        ResultsModel startResultsModel = new ResultsModel(title, Integer.parseInt(pageids), finalData.get(0));
         searchingResults.add(startResultsModel);
 
         for (int i = 1; i < finalData.size(); i += 2) {
@@ -66,7 +63,7 @@ public class ParseController {
             searchingResults.add(resultsModel);
         }
 
-        updateRecyclerView();
+        setAdapterResultRV("page");
         MainActivity.viewPager.setCurrentItem(1);
 
     }
@@ -98,7 +95,7 @@ public class ParseController {
 
         if (error.equals("0")) {
             showError("Совпадений не найдено");
-            updateRecyclerView();
+            setAdapterResultRV("result");
         } else {
             try {
                 obj = new JSONObject(strQuery);//получаем search
@@ -108,7 +105,7 @@ public class ParseController {
 
                     String tmpObj = arrayOfResults.getString(i);
 
-                    title = parseJSON(tmpObj, "title");
+                    String  title = parseJSON(tmpObj, "title");
                     int pageid = Integer.parseInt(parseJSON(tmpObj, "pageid"));
                     String snippet = parseJSON(tmpObj, "snippet");
                     String body = "..." + Html.fromHtml(snippet).toString() + "...";
@@ -122,7 +119,7 @@ public class ParseController {
             } catch (Exception ignored) {
             }
 
-            updateRecyclerView();
+            setAdapterResultRV("result");
             MainActivity.viewPager.setCurrentItem(1);
         }
 

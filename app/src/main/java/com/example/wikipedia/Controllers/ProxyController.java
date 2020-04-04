@@ -2,13 +2,13 @@ package com.example.wikipedia.Controllers;
 
 import com.example.wikipedia.Models.SearchPageModel;
 
+import static com.example.wikipedia.MainActivity.fireBaseController;
 import static com.example.wikipedia.ui.SearchFragment.hideError;
 import static com.example.wikipedia.ui.SearchFragment.oldWord;
 import static com.example.wikipedia.ui.SearchFragment.showError;
 
 public class ProxyController {
 
-    private FireBaseController fireBaseController;
     private String url;
     private String startUrl = "w/api.php?action=query&format=json&utf8&";
 
@@ -20,14 +20,13 @@ public class ProxyController {
                 break;
             case "page":
                 url = startUrl + "prop=extracts&explaintext&indexpageids=1&pageids=" + inputData.getId();
-                writeInDB(inputData);
+                writeInFireBase(inputData);
                 break;
             default:
                 break;
         }
 
         if (!inputData.getTitle().equals("")) {
-
             QueryController queryController = new QueryController();
             queryController.queryApi(url, type);
             hideError();
@@ -35,11 +34,9 @@ public class ProxyController {
 
     }
 
-    private void writeInDB(SearchPageModel inputData) {
-
+    private void writeInFireBase(SearchPageModel inputData) {
         if (!inputData.getTitle().equals(oldWord) & !(inputData.getTitle().equals(""))) {
             oldWord = inputData.getTitle();
-            fireBaseController = new FireBaseController();
             fireBaseController.write(inputData);
         }
     }

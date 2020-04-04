@@ -1,5 +1,6 @@
 package com.example.wikipedia.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wikipedia.Controllers.DataBaseController;
+import com.example.wikipedia.Controllers.RecyclerView.PageAdapter;
 import com.example.wikipedia.Controllers.RecyclerView.ResultsAdapter;
-import com.example.wikipedia.MainActivity;
 import com.example.wikipedia.Models.ResultsModel;
-import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
 
 import java.util.List;
@@ -24,8 +25,10 @@ import static com.example.wikipedia.Controllers.ParseController.searchingResults
 
 public class ResultFragment extends Fragment {
 
-    private static ResultsAdapter adapter;
+    private static PageAdapter pageAdapter;
+    private static ResultsAdapter resultsAdapter;
     private static RecyclerView recyclerView;
+    @SuppressLint("StaticFieldLeak")
     private static TextView emptyResult;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,9 +36,13 @@ public class ResultFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.result_fragment, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.list);
-        adapter = new ResultsAdapter(inflater.getContext(),searchingResults);//создаем адаптер
         emptyResult = (TextView) v.findViewById(R.id.emptyResults);
-        updateRecyclerView();
+
+        resultsAdapter = new ResultsAdapter(inflater.getContext(), searchingResults);//создаем адаптер
+        pageAdapter = new PageAdapter(inflater.getContext(), searchingResults);//создаем адаптер
+
+        DataBaseController.startDatabase(inflater.getContext());
+        setAdapterResultRV("result");
 
 //        Picasso.with(inflater.getContext())
 //                .load("https://commons.wikimedia.org/wiki/File:Cat_poster_1.jpg")
@@ -54,8 +61,17 @@ public class ResultFragment extends Fragment {
         }
     }
 
-    public static void updateRecyclerView(){
-        recyclerView.setAdapter(adapter);//устанавливаем для списка адаптер
+    public static void setAdapterResultRV(String type) {
+
+        switch (type) {
+            case "result":
+                recyclerView.setAdapter(resultsAdapter);//устанавливаем для списка адаптер
+                break;
+            case "page":
+                recyclerView.setAdapter(pageAdapter);//устанавливаем для списка адаптер
+                break;
+        }
+
     }
 
 }

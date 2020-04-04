@@ -1,7 +1,7 @@
 package com.example.wikipedia.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +20,16 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class SearchFragment extends Fragment {
 
-    private Button button;
     public static String oldWord = "";
-    private String searchStr;
+    @SuppressLint("StaticFieldLeak")
     private static TextInputLayout mTextInputLayout;
     private EditText mEditText;
+    private Button button;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         View v = inflater.inflate(R.layout.search_fragment, container, false);
 
@@ -59,13 +58,14 @@ public class SearchFragment extends Fragment {
     }
 
     private void startQuery() {
-        searchStr = mEditText.getText().toString().trim();
+        String searchStr = mEditText.getText().toString().trim();
 
-        ProxyController proxyController = new ProxyController();
         SearchPageModel searchPageModel = new SearchPageModel();
         searchPageModel.setTitle(searchStr);
+
+        ProxyController proxyController = new ProxyController();
         proxyController.preparation(searchPageModel, "search");
-        
+
     }
 
     public static void showError(String message) {

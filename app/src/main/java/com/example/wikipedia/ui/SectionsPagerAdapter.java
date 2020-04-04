@@ -16,17 +16,16 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position) {
-            case 0:
-                SearchFragment searchFragment = new SearchFragment();
-                return searchFragment;
             case 1:
-                ResultFragment resultFragment = new ResultFragment();
-                return resultFragment;
+                return new ResultFragment();
             case 2:
-                HistoryFragment historyFragment = new HistoryFragment();
-                return historyFragment;
+                return new HistoryFragment();
+            case 3:
+                return new FavoritesFragment();
+            default:
+                return new SearchFragment();
         }
-        return null;
+
     }
 
     @Override
@@ -38,12 +37,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return "Результат";
             case 2:
                 return "История";
+            case 3:
+                return "Лучшее";
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }
