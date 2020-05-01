@@ -32,7 +32,6 @@
         app:errorTextColor="#E00B0B"
         app:helperTextTextColor="#FFFFFF"
         app:hintTextColor="@color/box"
-        app:passwordToggleTint="#F3EAEA"
         app:startIconTint="#FAF7F7"
         app:suffixTextColor="#FBF8F8">
 
@@ -47,6 +46,8 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
+        android:layout_marginTop="50dp"
+        android:background="@color/backgroundRV"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
