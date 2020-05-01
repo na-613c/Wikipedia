@@ -13,7 +13,7 @@
         android:background="@color/background"
         android:gravity="center"
         android:text="Нет избранных записей"
-        android:textColor="@color/text"
+        android:textColor="@color/textBody"
         android:textSize="40sp" />
 
     <androidx.recyclerview.widget.RecyclerView
