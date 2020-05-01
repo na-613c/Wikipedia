@@ -4,11 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+    public static final int count = 4;
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public SectionsPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
+    }
+
+    public SectionsPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+        super(fm, behavior);
     }
 
     @NonNull
@@ -29,22 +35,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "Поиск";
-            case 1:
-                return "Результат";
-            case 2:
-                return "История";
-            case 3:
-                return "Лучшее";
-        }
-        return null;
-    }
-
-    @Override
     public int getCount() {
-        return 4;
+        return count;
     }
 }

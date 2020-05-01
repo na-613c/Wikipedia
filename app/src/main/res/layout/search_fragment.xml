@@ -25,33 +25,27 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
         android:hint="@string/input_word"
-        app:boxStrokeColor="#000000"
+        android:textColorHint="#C9F8F1F1"
+        app:boxStrokeColor="@color/box"
         app:boxStrokeErrorColor="#E00B0B"
         app:boxStrokeWidth="2dp"
         app:errorTextColor="#E00B0B"
-        app:hintTextColor="#020202">
+        app:helperTextTextColor="#FFFFFF"
+        app:hintTextColor="@color/box"
+        app:passwordToggleTint="#F3EAEA"
+        app:startIconTint="#FAF7F7"
+        app:suffixTextColor="#FBF8F8">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:textColorLink="#FFFFFF"
             android:textSize="25sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:paddingHorizontal="40dp"
-        android:text="@string/search"
-        android:textColor="#000"
-        android:textSize="23sp"
-        app:strokeColor="#000" />
+
 
 </LinearLayout>

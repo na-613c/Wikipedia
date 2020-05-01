@@ -26,6 +26,7 @@ public class HistoryFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static TextView emptyHistory;
     private static HistoryAdapter adapter;
+    public static final String TITLE = "ИСТОРИЯ";
 
 
     @Override

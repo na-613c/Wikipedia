@@ -1,33 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:tabIndicatorColor="#fff"
-            app:tabIndicatorHeight="4dp"
-            app:tabSelectedTextColor="#000"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="#fff" />
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:background="@color/backgroundRV"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <com.gigamole.navigationtabstrip.NavigationTabStrip
+            android:id="@+id/nts_center"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="30dp"
+            app:nts_active_color="@color/text"
+            app:nts_color="#3cdedd"
+            app:nts_corners_radius="3.5dp"
+            app:nts_factor="0.8"
+            app:nts_gravity="bottom"
+            app:nts_inactive_color="@color/textBody"
+            app:nts_type="point"
+            app:nts_typeface="fonts/moon.otf"
+            app:nts_weight="7dp"/>
+
+    </FrameLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="#ff252e39"
+        />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

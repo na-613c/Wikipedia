@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#6B6B6B">
+    android:background="@color/backgroundRV">
 
     <TextView
         android:id="@+id/emptyResults"
@@ -13,7 +13,7 @@
         android:background="@color/background"
         android:gravity="center"
         android:text="Начните поиск"
-        android:textColor="#070707"
+        android:textColor="@color/text"
         android:textSize="40sp" />
 
     <androidx.recyclerview.widget.RecyclerView

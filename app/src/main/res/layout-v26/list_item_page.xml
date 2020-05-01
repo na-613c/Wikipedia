@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="wwwwwwwwwwwwwwwwwwww"
-            android:textColor="#000"
-            android:textSize="30sp" />
+            android:textColor="@color/text"
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/add"
@@ -40,8 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/word"
-        android:textColor="#000"
-        android:textSize="20sp" />
+        android:textColor="@color/textBody"
+        android:textSize="18sp" />
 
 
 </LinearLayout>

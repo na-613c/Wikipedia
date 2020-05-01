@@ -24,7 +24,7 @@ public class SearchFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private static TextInputLayout mTextInputLayout;
     private EditText mEditText;
-    private Button button;
+    public static final String TITLE = "ПОИСК";
 
 
     @Override
@@ -35,7 +35,6 @@ public class SearchFragment extends Fragment {
 
         mTextInputLayout = (TextInputLayout) v.findViewById(R.id.textInputLayout);
         mEditText = (EditText) v.findViewById(R.id.editTextName);
-        button = (Button) v.findViewById(R.id.button);
 
         mEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -48,11 +47,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startQuery();
-            }
-        });
 
         return v;
     }

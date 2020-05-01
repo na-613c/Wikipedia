@@ -30,6 +30,9 @@ public class ResultFragment extends Fragment {
     private static RecyclerView recyclerView;
     @SuppressLint("StaticFieldLeak")
     private static TextView emptyResult;
+    public static final String TITLE = "РЕЗУЛЬТАТЫ";
+
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

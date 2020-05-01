@@ -47,18 +47,21 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.ViewHolder> {
 
         final ResultsModel resultsModel = resultsModels.get(position);
 
+        holder.title.setText(resultsModel.getTitle().toUpperCase());
+        holder.body.setText(resultsModel.getBody());
+
         if (position != 0) {
             holder.btn.setVisibility(INVISIBLE);
             holder.title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
 
         } else {
+            holder.title.setTextSize(28.0f);
             holder.btn.setVisibility(VISIBLE);
             holder.title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
 
         }
 
-        holder.title.setText(resultsModel.getTitle().toUpperCase());
-        holder.body.setText(resultsModel.getBody());
+
 
         holder.btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

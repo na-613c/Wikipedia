@@ -26,6 +26,8 @@ public class FavoritesFragment extends Fragment {
     private static RecyclerView recyclerView;
     private static TextView emptyResult;
 
+    public static final String TITLE = "ИЗБРАННОЕ";
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
