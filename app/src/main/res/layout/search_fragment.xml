@@ -25,7 +25,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="50dp"
         android:hint="@string/input_word"
-        android:textColorHint="#C9F8F1F1"
+        android:textColorHint="#fff"
         app:boxStrokeColor="@color/box"
         app:boxStrokeErrorColor="#E00B0B"
         app:boxStrokeWidth="2dp"
