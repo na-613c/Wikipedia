@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backgroundRV"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -41,11 +42,12 @@
     </FrameLayout>
 
     <androidx.viewpager.widget.ViewPager
+        android:layout_margin="@dimen/margin"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
-        android:background="#ff252e39"
+        android:background="@color/backgroundRV"
         />
 
 </LinearLayout>

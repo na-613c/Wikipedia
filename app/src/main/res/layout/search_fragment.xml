@@ -3,54 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/backgroundRV"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:freezesText="true"
-        android:text="@string/app_name"
-        android:textSize="50sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="50dp"
-        android:hint="@string/input_word"
-        android:textColorHint="#fff"
-        app:boxStrokeColor="@color/box"
-        app:boxStrokeErrorColor="#E00B0B"
-        app:boxStrokeWidth="2dp"
-        app:errorTextColor="#E00B0B"
-        app:helperTextTextColor="#FFFFFF"
-        app:hintTextColor="@color/box"
-        app:startIconTint="#FAF7F7"
-        app:suffixTextColor="#FBF8F8">
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/myrect"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextName"
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:freezesText="true"
+            android:text="@string/app_name"
+            android:textSize="50sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColorLink="#FFFFFF"
-            android:textSize="25sp" />
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="50dp"
+            android:hint="@string/input_word"
+            android:textColorHint="#fff"
+            app:boxStrokeColor="@color/box"
+            app:boxStrokeErrorColor="#E00B0B"
+            app:placeholderTextColor="#fff"
+            app:boxStrokeWidth="2dp"
+            app:errorTextColor="#E00B0B"
+            app:helperTextTextColor="#FFFFFF"
+            app:hintTextColor="@color/box"
+            app:passwordToggleTint="#F3EAEA"
+            app:startIconTint="#FAF7F7"
+            app:suffixTextColor="#FBF8F8"
+            >
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColorLink="#FFFFFF"
+                android:textColor="#fff"
+                android:textSize="25sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
 
     <ImageView
-        android:layout_marginTop="50dp"
-        android:background="@color/backgroundRV"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/backgroundRV"
         android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/www1" />
 

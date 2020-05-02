@@ -53,15 +53,16 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.ViewHolder> {
         if (position != 0) {
             holder.btn.setVisibility(INVISIBLE);
             holder.title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
+//            holder.linerLayout.setPadding(0,20,0,0);
 
         } else {
             holder.title.setTextSize(28.0f);
             holder.btn.setVisibility(VISIBLE);
             holder.title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
+//            holder.linerLayout.setPadding(0,0,0,0);
 
         }
-
-
+        //        holder.linerLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
 
         holder.btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -99,6 +100,7 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.ViewHolder> {
             body = (TextView) view.findViewById(R.id.body);
             btn = (ImageButton) view.findViewById(R.id.add);
             linerLayout = (LinearLayout) view.findViewById(R.id.liner_layout);
+
         }
     }
 }

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:layout_margin="8dp"
+    android:background="@drawable/myrect"
+    android:elevation="2dp"
     android:orientation="vertical">
 
     <TextView
@@ -48,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:textColorLink="#FFFFFF"
+                android:textColor="#fff"
                 android:textSize="25sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
