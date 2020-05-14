@@ -15,6 +15,8 @@
         android:layout_height="wrap_content"
         android:text="@string/word"
         android:textColor="@color/text"
+        android:shadowColor="#000"
+        android:shadowRadius="1"
         android:textSize="30sp" />
 
     <TextView

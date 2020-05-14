@@ -14,6 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:shadowColor="#FFFFFF"
+        android:shadowRadius="1"
+        android:textColor="#000"
         android:freezesText="true"
         android:text="@string/app_name"
         android:textSize="30sp" />
