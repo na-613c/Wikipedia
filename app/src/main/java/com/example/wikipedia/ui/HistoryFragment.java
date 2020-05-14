@@ -16,6 +16,7 @@ import com.example.wikipedia.R;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static com.example.wikipedia.MainActivity.addPageList;
 import static com.example.wikipedia.MainActivity.fireBaseController;
 import static com.example.wikipedia.MainActivity.history;
 

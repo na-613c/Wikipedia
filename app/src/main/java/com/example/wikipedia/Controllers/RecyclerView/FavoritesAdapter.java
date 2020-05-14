@@ -2,6 +2,8 @@ package com.example.wikipedia.Controllers.RecyclerView;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikipedia.Controllers.ProxyController;
@@ -19,6 +22,7 @@ import com.example.wikipedia.R;
 import java.util.List;
 
 import static com.example.wikipedia.Controllers.DataBaseController.deleteFromDatabase;
+import static com.example.wikipedia.MainActivity.myContext;
 import static com.example.wikipedia.ui.FavoritesFragment.checkIfEmpty;
 
 
@@ -51,7 +55,35 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                deleteFromDatabase(searchPageModel.getId());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( myContext,R.style.CustomAlertDialogTheme);
+                builder.setTitle("Удалить?");  // заголовок
+                builder.setMessage("Вы действительно хотите удалить запись из избранного?"); // сообщение
+
+                builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        deleteFromDatabase(searchPageModel.getId());
+                    }
+                });
+                builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setCancelable(true);
+
+
+                AlertDialog alert = builder.create();
+//            alert.setOnShowListener(new DialogInterface.OnShowListener() {
+//                @Override
+//                public void onShow(DialogInterface arg0) {
+//                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(BLACK);
+//                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(BLACK);
+//                }
+//            });
+
+                alert.show();
+
             }
         });
 

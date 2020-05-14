@@ -21,6 +21,7 @@ import java.util.List;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static com.example.wikipedia.Controllers.ParseController.searchingResults;
+import static com.example.wikipedia.MainActivity.addPageList;
 
 
 public class ResultFragment extends Fragment {

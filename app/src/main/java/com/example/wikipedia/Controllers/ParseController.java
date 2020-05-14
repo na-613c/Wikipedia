@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.wikipedia.ui.ResultFragment.setAdapterResultRV;
+import static com.example.wikipedia.ui.SearchFragment.hideKeyboardFrom;
 import static com.example.wikipedia.ui.SearchFragment.showError;
 
 public class ParseController {
@@ -120,6 +121,7 @@ public class ParseController {
             }
 
             setAdapterResultRV("result");
+            hideKeyboardFrom();
             MainActivity.viewPager.setCurrentItem(1);
         }
 

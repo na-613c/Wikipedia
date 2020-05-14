@@ -1,12 +1,15 @@
 package com.example.wikipedia.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +21,8 @@ import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import static com.example.wikipedia.MainActivity.addPageList;
+
 public class SearchFragment extends Fragment {
 
     public static String oldWord = "";
@@ -25,6 +30,7 @@ public class SearchFragment extends Fragment {
     private static TextInputLayout mTextInputLayout;
     private EditText mEditText;
     public static final String TITLE = "ПОИСК";
+    public static Context context;
 
 
     @Override
@@ -33,6 +39,7 @@ public class SearchFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.search_fragment, container, false);
 
+        context = getActivity();
         mTextInputLayout = (TextInputLayout) v.findViewById(R.id.textInputLayout);
         mEditText = (EditText) v.findViewById(R.id.editTextName);
 
@@ -60,6 +67,12 @@ public class SearchFragment extends Fragment {
         ProxyController proxyController = new ProxyController();
         proxyController.preparation(searchPageModel, "search");
 
+    }
+
+    public static void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     public static void showError(String message) {

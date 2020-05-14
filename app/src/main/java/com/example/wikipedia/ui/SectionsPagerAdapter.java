@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import static com.example.wikipedia.MainActivity.addPageList;
+
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     public static final int count = 4;
 
@@ -13,14 +15,10 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    public SectionsPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
-    }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 1:
                 return new ResultFragment();
