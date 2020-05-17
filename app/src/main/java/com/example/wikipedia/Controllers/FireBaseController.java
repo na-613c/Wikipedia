@@ -27,10 +27,11 @@ public class FireBaseController {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 SearchPageModel searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
 
-                Log.d("___", searchWordFromDb.getTitle());
                 if (searchWordFromDb != null) {
                     history.add(0, searchWordFromDb);
-                    Log.d("___test_", history.size() + "");
+                    Log.d("_test__", "Записть №"+ history.size() +searchWordFromDb.getTitle());
+
+//                    Log.d("___test_", history.size() + "");
                     setAdapterHistoryRV();
                 }
 

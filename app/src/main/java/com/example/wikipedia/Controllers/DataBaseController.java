@@ -50,7 +50,7 @@ public class DataBaseController {
             int pageidColIndex = cursor.getColumnIndex("pageid");
 
             do { // получаем значения по номерам столбцов и пишем все в лог
-                Log.d("_DB__", "ID = " + cursor.getInt(idColIndex) + ", title = " + cursor.getString(titleColIndex) + ", pageid = " + cursor.getString(pageidColIndex));
+                //Log.d("_DB__", "ID = " + cursor.getInt(idColIndex) + ", title = " + cursor.getString(titleColIndex) + ", pageid = " + cursor.getString(pageidColIndex));
 
                 SearchPageModel searchPageModel = new SearchPageModel();
                 searchPageModel.setId(cursor.getInt(pageidColIndex));
@@ -61,7 +61,7 @@ public class DataBaseController {
                 // а если следующей нет (текущая - последняя), то false - выходим из цикла
             } while (cursor.moveToNext());
 
-        } else Log.d("_DB__", "0 rows");
+        } else //Log.d("_DB__", "0 rows");
         cursor.close();
 
         setAdapterFavoritesRV();

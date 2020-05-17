@@ -23,6 +23,7 @@
             android:layout_weight="3"
             android:text="wwwwwwwwwwwwwwwwwwww"
             android:textColor="@color/text"
+            android:textIsSelectable="true"
             android:textSize="20sp" />
 
         <ImageButton
@@ -41,10 +42,14 @@
         android:id="@+id/body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/word"
-        android:textColor="@color/textBody2"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:textColorLink="@color/link"
         android:shadowColor="#000"
         android:shadowRadius="1"
+        android:text="@string/word"
+        android:textColor="@color/textBody2"
+        android:textIsSelectable="true"
         android:textSize="18sp" />
 
 

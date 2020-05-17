@@ -11,9 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:linksClickable="true"
         android:text="Начните поиск"
+        android:autoLink="web"
+        android:textColorLink="@color/link"
         android:textColor="@color/textBody"
         android:textSize="40sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

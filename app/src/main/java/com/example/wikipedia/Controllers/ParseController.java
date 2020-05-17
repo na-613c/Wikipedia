@@ -109,9 +109,10 @@ public class ParseController {
                     String  title = parseJSON(tmpObj, "title");
                     int pageid = Integer.parseInt(parseJSON(tmpObj, "pageid"));
                     String snippet = parseJSON(tmpObj, "snippet");
-                    String body = "..." + Html.fromHtml(snippet).toString() + "...";
 
-                    Log.d("snippet", snippet);
+                    String body = firstBigChar(snippet);
+
+                    //Log.d("snippet", snippet);
 
                     ResultsModel resultsModel = new ResultsModel(title, pageid, body);
                     searchingResults.add(resultsModel);
@@ -126,6 +127,18 @@ public class ParseController {
         }
 
 
+    }
+
+    private String firstBigChar(String data){
+        data = Html.fromHtml(data).toString().trim() + " ...";
+        String oldChar = data.substring(0, 1);
+        String lowerChar = data.substring(0, 1).toLowerCase();
+
+        Log.d("___","oldChar = "+oldChar +" __ lowerChar = " + lowerChar);
+
+        if(oldChar.equals(lowerChar)) data = "... " +data;
+
+        return data;
     }
 
     private String parseJSON(String str, String key) {

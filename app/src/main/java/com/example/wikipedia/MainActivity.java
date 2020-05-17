@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
     public static SearchPageModel searchPageModel;
     public static DataBaseController dataBaseController;
     public static FireBaseController fireBaseController;
-    public static List<SearchPageModel> history;
+    public static List<SearchPageModel> history = new ArrayList<>();
     public static ViewPager viewPager;
     private SectionsPagerAdapter sectionsPagerAdapter;
     private NavigationTabStrip mNavigationTabStrip;
-    public static List<Integer> pageList = new ArrayList<Integer>();
+    public static List<Integer> pageList = new ArrayList<>();
     public static Context myContext;
 
     @Override
@@ -41,14 +43,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Roboto-Regular.ttf");
-        addPageList(0);
+
+        if(pageList.size() == 0)addPageList(0);
+
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.view_pager);
         myContext = this;
         searchPageModel = new SearchPageModel();
         dataBaseController = new DataBaseController();
         fireBaseController = new FireBaseController();
-        history = new ArrayList<>();
 
         mNavigationTabStrip = findViewById(R.id.nts_center);
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if (pageList.size() < 2) {
-            Log.d("__IF__", "size() ==" + 0);
+            //Log.d("__IF__", "size() ==" + 0);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialogTheme);
             builder.setTitle("Выйти?");  // заголовок
@@ -125,4 +128,6 @@ public class MainActivity extends AppCompatActivity {
     public static void addPageList(Integer page) {
         pageList.add(0, page);
     }
+
+
 }

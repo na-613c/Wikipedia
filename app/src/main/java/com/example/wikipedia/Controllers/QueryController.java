@@ -38,7 +38,7 @@ class QueryController {
                         String jsonresponse = response.body();
 
                         SearchFragment.hideError();
-                        Log.d("__jsonresponse__", jsonresponse);
+                        //Log.d("__jsonresponse__", jsonresponse);
 
                         ParseController parseController = new ParseController();
                         parseController.searchInJSON(jsonresponse, type);
