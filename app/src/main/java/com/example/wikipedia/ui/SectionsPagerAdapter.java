@@ -3,10 +3,7 @@ package com.example.wikipedia.ui;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-
-import static com.example.wikipedia.MainActivity.addPageList;
 
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     public static final int count = 4;

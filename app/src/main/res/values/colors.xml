@@ -10,7 +10,6 @@
     <color name="textTitle">#3cdedd</color>
     <color name="textBody">#81ffffff</color>
     <color name="textBody2">#CDFFFFFF</color>
-<!--    <color name="mtrl_textinput_default_box_stroke_color">#00ff00</color>-->
     <color name="mtrl_textinput_default_box_stroke_color">#3cdedd</color>
     <color name="link">#673AB7</color>
 

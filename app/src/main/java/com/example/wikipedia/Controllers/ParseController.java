@@ -2,7 +2,6 @@ package com.example.wikipedia.Controllers;
 
 import android.annotation.SuppressLint;
 import android.text.Html;
-import android.util.Log;
 
 import com.example.wikipedia.MainActivity;
 import com.example.wikipedia.Models.ResultsModel;
@@ -106,7 +105,7 @@ public class ParseController {
 
                     String tmpObj = arrayOfResults.getString(i);
 
-                    String  title = parseJSON(tmpObj, "title");
+                    String title = parseJSON(tmpObj, "title");
                     int pageid = Integer.parseInt(parseJSON(tmpObj, "pageid"));
                     String snippet = parseJSON(tmpObj, "snippet");
 
@@ -129,14 +128,12 @@ public class ParseController {
 
     }
 
-    private String firstBigChar(String data){
+    private String firstBigChar(String data) {
         data = Html.fromHtml(data).toString().trim() + " ...";
         String oldChar = data.substring(0, 1);
         String lowerChar = data.substring(0, 1).toLowerCase();
 
-        Log.d("___","oldChar = "+oldChar +" __ lowerChar = " + lowerChar);
-
-        if(oldChar.equals(lowerChar)) data = "... " +data;
+        if (oldChar.equals(lowerChar)) data = "... " + data;
 
         return data;
     }

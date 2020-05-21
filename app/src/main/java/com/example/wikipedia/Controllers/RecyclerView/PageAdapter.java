@@ -3,7 +3,6 @@ package com.example.wikipedia.Controllers.RecyclerView;
 import android.content.Context;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,28 +48,22 @@ public class PageAdapter extends RecyclerView.Adapter<PageAdapter.ViewHolder> {
     public void onBindViewHolder(final PageAdapter.ViewHolder holder, int position) {
 
         final ResultsModel resultsModel = resultsModels.get(position);
-        Log.d("__!_",resultsModel.getBody());
+
         holder.title.setText(resultsModel.getTitle().toUpperCase());
         holder.body.setMovementMethod(LinkMovementMethod.getInstance());
         Linkify.addLinks(holder.body, Linkify.ALL);
         holder.body.setText(resultsModel.getBody());
 
 
-
-
         if (position != 0) {
             holder.btn.setVisibility(INVISIBLE);
             holder.title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0));
-//            holder.linerLayout.setPadding(0,20,0,0);
 
         } else {
             holder.title.setTextSize(28.0f);
             holder.btn.setVisibility(VISIBLE);
             holder.title.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3));
-//            holder.linerLayout.setPadding(0,0,0,0);
-
         }
-        //        holder.linerLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
 
         holder.btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -1,7 +1,5 @@
 package com.example.wikipedia.Controllers;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.wikipedia.Models.ApiInterface;
@@ -38,7 +36,6 @@ class QueryController {
                         String jsonresponse = response.body();
 
                         SearchFragment.hideError();
-                        //Log.d("__jsonresponse__", jsonresponse);
 
                         ParseController parseController = new ParseController();
                         parseController.searchInJSON(jsonresponse, type);

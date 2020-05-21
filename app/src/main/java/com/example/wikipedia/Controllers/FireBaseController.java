@@ -1,7 +1,5 @@
 package com.example.wikipedia.Controllers;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.wikipedia.Models.SearchPageModel;
@@ -12,8 +10,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 
-
 import static com.example.wikipedia.MainActivity.history;
+import static com.example.wikipedia.MainActivity.timeTester;
 import static com.example.wikipedia.ui.HistoryFragment.setAdapterHistoryRV;
 
 public class FireBaseController {
@@ -27,11 +25,14 @@ public class FireBaseController {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 SearchPageModel searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
 
+                try {
+                    timeTester.endTime();
+                } catch (Exception e) {
+                }
+
                 if (searchWordFromDb != null) {
                     history.add(0, searchWordFromDb);
-                    Log.d("_test__", "Записть №"+ history.size() +searchWordFromDb.getTitle());
 
-//                    Log.d("___test_", history.size() + "");
                     setAdapterHistoryRV();
                 }
 
@@ -74,9 +75,9 @@ public class FireBaseController {
 //    public void delete(final String key) {
 //        myRef.removeValue();
 //    }
-
     public void write(SearchPageModel wordForDB) {
         myRef.push().setValue(wordForDB);
+        timeTester.startTime();
     }
 
 }

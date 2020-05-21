@@ -3,9 +3,6 @@ package com.example.wikipedia;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,8 +21,6 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.graphics.Color.BLACK;
-
 public class MainActivity extends AppCompatActivity {
 
     public static SearchPageModel searchPageModel;
@@ -37,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private NavigationTabStrip mNavigationTabStrip;
     public static List<Integer> pageList = new ArrayList<>();
     public static Context myContext;
+    public static TimeTester timeTester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        timeTester = new TimeTester();
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Roboto-Regular.ttf");
-
-        if(pageList.size() == 0)addPageList(0);
+        addPageList(0);
 
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.view_pager);
@@ -88,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if (pageList.size() < 2) {
-            //Log.d("__IF__", "size() ==" + 0);
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialogTheme);
             builder.setTitle("Выйти?");  // заголовок
             builder.setMessage("Вы действительно хотите выйти?"); // сообщение
@@ -106,16 +99,7 @@ public class MainActivity extends AppCompatActivity {
             });
             builder.setCancelable(true);
 
-
             AlertDialog alert = builder.create();
-//            alert.setOnShowListener(new DialogInterface.OnShowListener() {
-//                @Override
-//                public void onShow(DialogInterface arg0) {
-//                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(BLACK);
-//                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(BLACK);
-//                }
-//            });
-
             alert.show();
 
         } else {
@@ -128,6 +112,4 @@ public class MainActivity extends AppCompatActivity {
     public static void addPageList(Integer page) {
         pageList.add(0, page);
     }
-
-
 }

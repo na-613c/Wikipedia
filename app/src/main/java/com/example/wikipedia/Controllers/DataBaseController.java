@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.wikipedia.Models.SearchPageModel;
 
@@ -25,7 +24,6 @@ public class DataBaseController {
     }
 
     public static void addInDatabase(int id, String title) {
-
         ContentValues cv = new ContentValues(); // создаем объект для данных
 
         cv.put(DBHelper.KEY_PAGEID, id);
@@ -36,8 +34,8 @@ public class DataBaseController {
         readFromDatabase();
     }
 
-    public static void deleteFromDatabase(int pageid){
-        db.delete(DBHelper.TABLE_FAVORITES, DBHelper.KEY_PAGEID + "="+pageid, null);
+    public static void deleteFromDatabase(int pageid) {
+        db.delete(DBHelper.TABLE_FAVORITES, DBHelper.KEY_PAGEID + "=" + pageid, null);
         readFromDatabase();
     }
 
@@ -50,7 +48,6 @@ public class DataBaseController {
             int pageidColIndex = cursor.getColumnIndex("pageid");
 
             do { // получаем значения по номерам столбцов и пишем все в лог
-                //Log.d("_DB__", "ID = " + cursor.getInt(idColIndex) + ", title = " + cursor.getString(titleColIndex) + ", pageid = " + cursor.getString(pageidColIndex));
 
                 SearchPageModel searchPageModel = new SearchPageModel();
                 searchPageModel.setId(cursor.getInt(pageidColIndex));
@@ -62,7 +59,7 @@ public class DataBaseController {
             } while (cursor.moveToNext());
 
         } else //Log.d("_DB__", "0 rows");
-        cursor.close();
+            cursor.close();
 
         setAdapterFavoritesRV();
 

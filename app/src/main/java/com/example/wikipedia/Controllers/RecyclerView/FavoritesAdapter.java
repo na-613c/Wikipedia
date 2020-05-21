@@ -72,15 +72,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                 });
                 builder.setCancelable(true);
 
-
                 AlertDialog alert = builder.create();
-//            alert.setOnShowListener(new DialogInterface.OnShowListener() {
-//                @Override
-//                public void onShow(DialogInterface arg0) {
-//                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(BLACK);
-//                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(BLACK);
-//                }
-//            });
 
                 alert.show();
 
