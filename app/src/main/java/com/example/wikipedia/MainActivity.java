@@ -32,12 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private NavigationTabStrip mNavigationTabStrip;
     public static List<Integer> pageList = new ArrayList<>();
     public static Context myContext;
-    public static TimeTester timeTester;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        timeTester = new TimeTester();
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/Roboto-Regular.ttf");
         addPageList(0);
 

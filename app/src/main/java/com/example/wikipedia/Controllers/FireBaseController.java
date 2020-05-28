@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 
 import static com.example.wikipedia.MainActivity.history;
-import static com.example.wikipedia.MainActivity.timeTester;
+
 import static com.example.wikipedia.ui.HistoryFragment.setAdapterHistoryRV;
 
 public class FireBaseController {
@@ -26,7 +26,7 @@ public class FireBaseController {
                 SearchPageModel searchWordFromDb = dataSnapshot.getValue(SearchPageModel.class);
 
                 try {
-                    timeTester.endTime();
+
                 } catch (Exception e) {
                 }
 
@@ -77,7 +77,6 @@ public class FireBaseController {
 //    }
     public void write(SearchPageModel wordForDB) {
         myRef.push().setValue(wordForDB);
-        timeTester.startTime();
     }
 
 }

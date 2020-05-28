@@ -12,7 +12,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-
     @NonNull
     @Override
     public Fragment getItem(int position) {
