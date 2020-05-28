@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Controllers.RecyclerView.HistoryAdapter;
+import com.example.wikipedia.ui.RecyclerView.HistoryAdapter;
 import com.example.wikipedia.R;
 
 import static android.view.View.INVISIBLE;

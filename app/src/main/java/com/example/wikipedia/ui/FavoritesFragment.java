@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wikipedia.Controllers.RecyclerView.FavoritesAdapter;
+import com.example.wikipedia.ui.RecyclerView.FavoritesAdapter;
 import com.example.wikipedia.Models.SearchPageModel;
 import com.example.wikipedia.R;
 

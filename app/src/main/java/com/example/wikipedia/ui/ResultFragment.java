@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wikipedia.Controllers.DataBaseController;
-import com.example.wikipedia.Controllers.RecyclerView.PageAdapter;
-import com.example.wikipedia.Controllers.RecyclerView.ResultsAdapter;
+import com.example.wikipedia.ui.RecyclerView.PageAdapter;
+import com.example.wikipedia.ui.RecyclerView.ResultsAdapter;
 import com.example.wikipedia.Models.ResultsModel;
 import com.example.wikipedia.R;
 

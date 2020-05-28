@@ -1,4 +1,4 @@
-package com.example.wikipedia.Controllers.RecyclerView;
+package com.example.wikipedia.ui.RecyclerView;
 
 
 import android.content.Context;
